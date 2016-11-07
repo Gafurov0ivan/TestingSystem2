@@ -27,7 +27,7 @@ public class MainController {
   @RequestMapping(value = "/")
   public ModelAndView showStart() {
     //List<User> users = userDao.getAllUsers();
-    userDao.save(new User(1L, "Kamila"));
+    //userDao.save(new User(1L, "Kamila"));
     return new ModelAndView("hello");
   }
 }
