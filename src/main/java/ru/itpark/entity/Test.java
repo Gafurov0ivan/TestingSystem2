@@ -15,6 +15,7 @@ public class Test extends BaseEntity {
 
   private Collection<Question> questions;
   private User author;
+  private String caption;
 
   @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
   public Collection<Question> getQuestions() {
@@ -32,5 +33,13 @@ public class Test extends BaseEntity {
 
   public void setAuthor(User author) {
     this.author = author;
+  }
+
+  public String getCaption() {
+    return caption;
+  }
+
+  public void setCaption(String caption) {
+    this.caption = caption;
   }
 }

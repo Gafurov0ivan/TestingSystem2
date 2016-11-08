@@ -3,7 +3,7 @@ package ru.itpark.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.itpark.entity.User;
+import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.service.UserService;
 
 
@@ -19,7 +19,13 @@ public class MainController {
 
   @RequestMapping(value = "/")
   public String goToHelloPage() {
-   // userService.save(new User(3L, "Vova"));
     return "hello";
+  }
+
+  @RequestMapping(value = "/userTest")
+  public ModelAndView getUserTests() {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("userTests");
+    return modelAndView;
   }
 }
