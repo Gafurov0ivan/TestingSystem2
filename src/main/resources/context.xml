@@ -3,13 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <context:component-scan base-package="ru.itpark"/>
 
@@ -17,7 +20,7 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="ru.itpark" />
+        <property name="packagesToScan" value="ru.itpark"/>
         <property name="configLocation">
             <value>classpath:hibernate.cfg.xml</value>
         </property>
@@ -31,7 +34,7 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
         <constructor-arg>
-            <bean  class="org.apache.commons.dbcp2.BasicDataSource">
+            <bean class="org.apache.commons.dbcp2.BasicDataSource">
                 <property name="driverClassName" value="${hibernate.connection.driverClassName}"/>
                 <property name="url" value="${hibernate.connection.url}"/>
                 <property name="username" value="${hibernate.connection.username}"/>
@@ -44,4 +47,9 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+    <jdbc:initialize-database data-source="dataSource" enabled="true">
+        <jdbc:script location="classpath:db_schema.sql"/>
+    </jdbc:initialize-database>
+
 </beans>
