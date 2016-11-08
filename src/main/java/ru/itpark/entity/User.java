@@ -11,26 +11,13 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "sysUser")
-public class User implements Serializable {
+public class User extends BaseEntity {
 
-  private Long id;
   private String userName;
 
-  public User() {
-  }
-
   public User(Long id, String userName) {
-    this.id = id;
+    setId(id);
     this.userName = userName;
-  }
-
-  @Id
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getUserName() {
