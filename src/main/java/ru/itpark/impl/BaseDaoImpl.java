@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
 import ru.itpark.dao.BaseDao;
 import ru.itpark.entity.BaseEntity;
 
@@ -34,12 +35,12 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
   }
 
 
+  protected Criteria getCriteria() {
+    return getSession().createCriteria(entityClass);
+  }
+
   @Transactional
   public void saveOrUpdate(E entity) {
     getSession().saveOrUpdate(entity);
-  }
-
-  protected Criteria getCriteria() {
-    return getSession().createCriteria(entityClass);
   }
 }
