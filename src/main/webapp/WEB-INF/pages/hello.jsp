@@ -4,6 +4,7 @@
   <title>Универсальная тестовая система</title>
 </head>
 <body>
-Привет, Марат и Ваня!
+
+<a type="button" href="userTest">все тесты</a>
 </body>
 </html>
