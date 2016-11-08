@@ -3,8 +3,9 @@ package ru.itpark.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.itpark.dao.TestDao;
-import ru.itpark.impl.TestDaoImpl;
+import ru.itpark.entity.User;
+import ru.itpark.service.UserService;
+
 
 /**
  * @author Kamila Iskhakova
@@ -14,11 +15,11 @@ import ru.itpark.impl.TestDaoImpl;
 public class MainController {
 
   @Autowired
-  private TestDao testDao;
+  private UserService userService;
 
-  @RequestMapping(value="/")
+  @RequestMapping(value = "/")
   public String goToHelloPage() {
-    //testDao.getTestsByAuthor(1L);
+   // userService.save(new User(3L, "Vova"));
     return "hello";
   }
 }

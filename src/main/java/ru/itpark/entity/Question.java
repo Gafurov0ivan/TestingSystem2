@@ -1,6 +1,8 @@
 package ru.itpark.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 /**
  * @author Kamila Iskhakova
@@ -9,12 +11,12 @@ import javax.persistence.Entity;
 @Entity
 public class Question extends BaseEntity {
 
+  private Test test;            // ссылка на тест
+  private String question;      // вопрос
+  private Integer answerCount;  // количество правльных ответов
+  //  private Collection<Answer> answers;
 
-  private Test test;  // ссылка на тест
-//  private Collection<Answer> answers;
-  private String question;
-
-
+  @ManyToOne(fetch = FetchType.LAZY)
   public Test getTest() {
     return test;
   }

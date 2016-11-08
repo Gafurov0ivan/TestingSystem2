@@ -13,7 +13,6 @@ import java.util.Collection;
 @Entity
 public class Test extends BaseEntity {
 
-
   private Collection<Question> questions;
   private User author;
 
