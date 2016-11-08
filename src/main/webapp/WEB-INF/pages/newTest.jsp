@@ -4,8 +4,7 @@
   <title>Универсальная тестовая система</title>
 </head>
 <body>
-
+На это странице будет создание нового теста
 <a type="button" href="userTest">все тесты</a>
-<a type="button" href="newTest">добавить тест</a>
 </body>
 </html>
