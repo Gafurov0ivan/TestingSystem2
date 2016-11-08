@@ -11,7 +11,7 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <context:component-scan base-package="ru.itpark" use-default-filters="false"/>
+    <context:component-scan base-package="ru.itpark"/>
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
