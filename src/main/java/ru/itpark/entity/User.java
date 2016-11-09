@@ -11,7 +11,7 @@ import java.io.Serializable;
  *         Created on 07.11.2016
  */
 @Entity
-@Table(name = "User")
+@Table(name = "sysUser")
 public class User extends BaseEntity {
 
   @Column(name = "username")

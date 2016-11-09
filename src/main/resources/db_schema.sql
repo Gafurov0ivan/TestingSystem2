@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS public."User"
+CREATE TABLE IF NOT EXISTS public."sysUser"
 (
   id serial NOT NULL,
   username text NOT NULL,
