@@ -1,7 +1,6 @@
 package ru.itpark.dao;
 
-import ru.itpark.entity.Question;
-import ru.itpark.entity.Test;
+import ru.itpark.model.Question;
 
 import java.util.List;
 

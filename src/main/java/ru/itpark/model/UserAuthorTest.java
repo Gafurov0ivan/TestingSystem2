@@ -1,4 +1,4 @@
-package ru.itpark.entity;
+package ru.itpark.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
  *         Created on 09.11.2016
  */
 @Entity
-public class UserTest extends BaseEntity {
+public class UserAuthorTest extends BaseEntity {
 
   private User user;
   private Test test;

@@ -1,6 +1,6 @@
 package ru.itpark.dao;
 
-import ru.itpark.entity.User;
+import ru.itpark.model.User;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface UserDao<E> extends BaseDao<E> {
 
-  List<User> getAllUsers();
-
-  User getUser(String userName);
-
+//  List<User> getAllUsers();
+//
+//  User getUser(String userName);
+//
   User getUser(String userName, String password);
 }

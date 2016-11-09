@@ -18,21 +18,6 @@
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="ru.itpark"/>
-        <property name="configLocation">
-            <value>classpath:hibernate.cfg.xml</value>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-            </props>
-        </property>
-    </bean>
-
     <bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
         <constructor-arg>
             <bean class="org.apache.commons.dbcp2.BasicDataSource">
@@ -44,10 +29,31 @@
         </constructor-arg>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
+
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="ru.itpark.model"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true"/>
+                <property name="databasePlatform" value="${hibernate.dialect}"/>
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+
 
     <jdbc:initialize-database data-source="dataSource" enabled="true">
         <jdbc:script location="classpath:db_schema.sql"/>

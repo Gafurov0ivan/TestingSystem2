@@ -3,7 +3,7 @@ package ru.itpark.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itpark.dao.UserDao;
-import ru.itpark.entity.User;
+import ru.itpark.model.User;
 
 /**
  * @author Kamila Iskhakova
