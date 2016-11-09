@@ -1,10 +1,10 @@
 package ru.itpark.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @author Kamila Iskhakova
@@ -14,11 +14,11 @@ import java.io.Serializable;
 @Table(name = "sysUser")
 public class User extends BaseEntity {
 
-  @Column(name = "username")
   private String userName;
-
-  @Column(name = "password")
   private String password;
+  private String fullName;
+  private Collection<UserTest> completedTests;
+  private Collection<UserAuthorTest> createdTests;
 
   public String getPassword() {
     return password;
@@ -44,4 +44,32 @@ public class User extends BaseEntity {
   public void setUserName(String userName) {
     this.userName = userName;
   }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  public Collection<UserTest> getCompletedTests() {
+    return completedTests;
+  }
+
+  public void setCompletedTests(Collection<UserTest> completedTests) {
+    this.completedTests = completedTests;
+  }
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  public Collection<UserAuthorTest> getCreatedTests() {
+    return createdTests;
+  }
+
+  public void setCreatedTests(Collection<UserAuthorTest> createdTests) {
+    this.createdTests = createdTests;
+  }
+
+
 }

@@ -19,12 +19,15 @@ public class UserService {
     userDao.saveOrUpdate(user);
   }
 
-  public User getUser(String userName) {
-    return userDao.getUserByUserName(userName);
-  }
 
-  public boolean checkUserValid(String userName, String password) {
-    User user = userDao.getUserByUserName(userName);
-    return user.getPassword().equals(password);
+  /**
+   * Поиск пользователя с логином и паролем
+   * @param userName
+   * @param password
+   * @return
+   */
+  public boolean isUserValid(String userName, String password) {
+    User user = userDao.getUser(userName, password);
+    return user != null;
   }
 }
