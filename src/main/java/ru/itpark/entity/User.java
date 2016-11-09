@@ -1,5 +1,6 @@
 package ru.itpark.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,27 +11,30 @@ import java.io.Serializable;
  *         Created on 07.11.2016
  */
 @Entity
-@Table(name = "sysUser")
-public class User implements Serializable {
+@Table(name = "User")
+public class User extends BaseEntity {
 
-  private Long id;
+  @Column(name = "username")
   private String userName;
+
+  @Column(name = "password")
+  private String password;
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
   public User() {
   }
 
   public User(Long id, String userName) {
-    this.id = id;
+    setId(id);
+
     this.userName = userName;
-  }
-
-  @Id
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getUserName() {
