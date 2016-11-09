@@ -28,9 +28,8 @@ public class MainController {
     return "hello";
   }
 
-  @RequestMapping(value = "/userTest")
+  @RequestMapping(value = "/userTests")
   public ModelAndView getUserTests() {
-    System.out.println(userService.isUserValid("3", "4"));
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("userTests");
     return modelAndView;
