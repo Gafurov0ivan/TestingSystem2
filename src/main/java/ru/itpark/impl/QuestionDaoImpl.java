@@ -5,7 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.QuestionDao;
-import ru.itpark.entity.Question;
+import ru.itpark.model.Question;
 
 import java.util.List;
 
@@ -22,9 +22,7 @@ public class QuestionDaoImpl extends BaseDaoImpl implements QuestionDao {
 
   @Transactional
   public List<Question> getQuestions(Long testId){
-    Criteria criteria = getCriteria();
-    criteria.createAlias("test", "test");
-    criteria.add(Restrictions.eq("test.id", testId));
-    return criteria.list();
+    //todo
+    return null;
   }
 }

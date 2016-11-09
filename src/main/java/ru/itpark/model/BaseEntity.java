@@ -1,4 +1,4 @@
-package ru.itpark.entity;
+package ru.itpark.model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +16,7 @@ public class BaseEntity implements Serializable {
   private Long id;
 
   @Id
-//  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
   }

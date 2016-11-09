@@ -1,4 +1,4 @@
-package ru.itpark.entity;
+package ru.itpark.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,6 +34,11 @@ public class User extends BaseEntity {
   public User(Long id, String userName) {
     setId(id);
 
+    this.userName = userName;
+  }
+
+  public User(String userName, String password) {
+    this.password = password;
     this.userName = userName;
   }
 

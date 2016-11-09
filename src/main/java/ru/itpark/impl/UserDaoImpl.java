@@ -5,7 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.UserDao;
-import ru.itpark.entity.User;
+import ru.itpark.model.User;
 
 import java.util.List;
 
@@ -21,24 +21,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao  {
     super(User.class);
   }
 
-
-  @Transactional
-  public List<User> getAllUsers(){
-    return getSession().createCriteria(User.class).list();
-  }
-
-  @Transactional
-  public User getUser(String userName) {
-    Criteria criteria = getCriteria();
-    criteria.add(Restrictions.eq("userName", userName));
-    return (User)criteria.uniqueResult();
-  }
-
   @Override
   public User getUser(String userName, String password) {
-    Criteria criteria = getCriteria();
-    criteria.add(Restrictions.eq("userName", userName));
-    criteria.add(Restrictions.eq("password", password));
-    return (User)criteria.uniqueResult();
+    return (User)getEntityManager().createQuery(
+        "SELECT u FROM User u WHERE u.userName= :userName and u.password=:password")
+        .setParameter("userName", userName)
+        .setParameter("password", password)
+        .getSingleResult();
   }
 }

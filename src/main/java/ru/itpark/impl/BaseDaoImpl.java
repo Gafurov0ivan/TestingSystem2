@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.itpark.dao.BaseDao;
-import ru.itpark.entity.BaseEntity;
+import ru.itpark.model.BaseEntity;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * @author Kamila Iskhakova
@@ -18,8 +21,8 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
 
   private Class<E> entityClass;
 
-  @Autowired
-  private SessionFactory sessionFactory;
+  @PersistenceContext
+  private EntityManager entityManager;
 
   public BaseDaoImpl(Class<E> entityClass) {
     init(entityClass);
@@ -29,18 +32,18 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
     this.entityClass = entityClass;
   }
 
-
-  protected Session getSession() {
-    return sessionFactory.getCurrentSession();
+  public EntityManager getEntityManager() {
+    return entityManager;
   }
 
-
-  protected Criteria getCriteria() {
-    return getSession().createCriteria(entityClass);
-  }
 
   @Transactional
   public void saveOrUpdate(E entity) {
-    getSession().saveOrUpdate(entity);
+    entityManager.persist(entity);
+  }
+
+  @Transactional
+  public void remove(E entity) {
+    entityManager.remove(entity);
   }
 }

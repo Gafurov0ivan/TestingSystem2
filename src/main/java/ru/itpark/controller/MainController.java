@@ -1,14 +1,13 @@
 package ru.itpark.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ru.itpark.entity.User;
+import ru.itpark.model.User;
 import ru.itpark.service.UserService;
 
 import java.io.IOException;
@@ -31,6 +30,7 @@ public class MainController {
 
   @RequestMapping(value = "/userTest")
   public ModelAndView getUserTests() {
+    System.out.println(userService.isUserValid("3", "4"));
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("userTests");
     return modelAndView;

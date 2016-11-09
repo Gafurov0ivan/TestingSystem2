@@ -5,7 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.TestDao;
-import ru.itpark.entity.Test;
+import ru.itpark.model.Test;
 
 import java.util.List;
 
@@ -22,10 +22,8 @@ public class TestDaoImpl extends BaseDaoImpl implements TestDao {
 
   @Transactional
   public List<Test> getTestsByAuthor(Long authorId) {
-    Criteria criteria = getCriteria();
-    criteria.createAlias("author", "author");
-    criteria.add(Restrictions.eq("author.id", authorId));
-    return criteria.list();
+    //todo
+    return null;
   }
 
 }

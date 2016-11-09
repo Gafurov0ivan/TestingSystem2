@@ -1,6 +1,6 @@
 package ru.itpark.dao;
 
-import ru.itpark.entity.Test;
+import ru.itpark.model.Test;
 
 import java.util.List;
 

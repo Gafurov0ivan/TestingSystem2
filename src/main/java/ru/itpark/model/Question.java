@@ -1,4 +1,4 @@
-package ru.itpark.entity;
+package ru.itpark.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

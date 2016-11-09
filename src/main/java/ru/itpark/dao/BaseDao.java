@@ -7,4 +7,5 @@ package ru.itpark.dao;
 public interface BaseDao<E> {
 
   void saveOrUpdate(E entity);
+  void remove(E entity);
 }
