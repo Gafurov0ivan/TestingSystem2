@@ -5,9 +5,15 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.AnswerDao;
 import ru.itpark.model.Answer;
+import ru.itpark.model.Question;
 
-public class AnswerDaoImpl implements AnswerDao {
-	  @Transactional
+public class AnswerDaoImpl extends BaseDaoImpl implements AnswerDao {
+
+	public AnswerDaoImpl() {
+		super(Question.class);
+	}
+
+	@Transactional
 	public List getAnswers(Long questionId) {
 		return null;
 	}

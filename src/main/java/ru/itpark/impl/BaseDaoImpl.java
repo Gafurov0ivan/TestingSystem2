@@ -6,6 +6,8 @@ import ru.itpark.model.BaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 
 /**
  * @author Kamila Iskhakova
@@ -31,6 +33,9 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
     return entityManager;
   }
 
+  protected CriteriaQuery getCriteriaQuery() {
+    return entityManager.getCriteriaBuilder().createQuery();
+  }
 
   @Transactional
   public void saveOrUpdate(E entity) {
@@ -40,5 +45,12 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
   @Transactional
   public void remove(E entity) {
     entityManager.remove(entity);
+  }
+
+  @Transactional
+  public List<E> getAll() {
+    CriteriaQuery criteriaQuery = getCriteriaQuery();
+    criteriaQuery.select(criteriaQuery.from(entityClass));
+    return entityManager.createQuery(criteriaQuery).getResultList();
   }
 }

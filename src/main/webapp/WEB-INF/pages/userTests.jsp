@@ -1,28 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
   <title>Мои тесты</title>
 </head>
 <body>
 <div class="starter-template">
-  <h1>Универсальная тестовая система</h1>
+  <h1>Мои тесты</h1>
 </div>
-<table border=1>
+<br>
+<table>
   <thead>
   <tr>
-    <th>ID</th>
-    <th>Название теста</th>
+    <th>Наименование теста</th>
   </tr>
   </thead>
   <tbody>
-  <c:forEach items="${tests}" var="test">
+  <c:forEach items="${tests}" var = "test">
     <tr>
-      <td><c:out value="${test.id}"/></td>
       <td><c:out value="${test.caption}"/></td>
     </tr>
   </c:forEach>
   </tbody>
 </table>
-<p><a href="newTest">Добавить новый тест</a></p>
+
+<p><a href="newTest">Создать новый тест</a></p>
 </body>
 </html>

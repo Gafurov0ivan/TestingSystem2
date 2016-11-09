@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.model.User;
-import ru.itpark.service.UserService;
+import ru.itpark.service.TestService;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import java.io.IOException;
 public class MainController {
 
   @Autowired
-  private UserService userService;
+  private TestService testService;
 
   @RequestMapping(value = "/")
   public String goToHelloPage() {
@@ -32,6 +32,7 @@ public class MainController {
   public ModelAndView getUserTests() {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("userTests");
+    modelAndView.addObject("tests", testService.getAll());
     return modelAndView;
   }
 

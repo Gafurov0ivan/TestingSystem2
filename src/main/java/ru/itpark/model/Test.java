@@ -17,6 +17,13 @@ public class Test extends BaseEntity {
   private User author;
   private String caption;
 
+  public Test(String caption) {
+    this.caption = caption;
+  }
+
+  public Test() {
+  }
+
   @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
   public Collection<Question> getQuestions() {
     return questions;
