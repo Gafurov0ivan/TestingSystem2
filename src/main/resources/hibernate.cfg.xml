@@ -9,5 +9,6 @@
         <mapping class="ru.itpark.model.UserAuthorTest"/>
         <mapping class="ru.itpark.model.Test"/>
         <mapping class="ru.itpark.model.Question"/>
+        <mapping class="ru.itpark.model.Answer"/>
     </session-factory>
 </hibernate-configuration>
