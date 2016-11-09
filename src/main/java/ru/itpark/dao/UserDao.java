@@ -13,7 +13,7 @@ public interface UserDao<E> extends BaseDao<E> {
 
   List<User> getAllUsers();
 
-  User getUserByUserName(String userName);
+  User getUser(String userName);
 
-
+  User getUser(String userName, String password);
 }
