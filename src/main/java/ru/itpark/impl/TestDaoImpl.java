@@ -4,7 +4,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.TestDao;
 import ru.itpark.model.Test;
+import ru.itpark.model.UserTest;
 
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 /**
@@ -18,10 +21,18 @@ public class TestDaoImpl extends BaseDaoImpl implements TestDao {
     super(Test.class);
   }
 
-  @Transactional
-  public List<Test> getTestsByAuthor(Long authorId) {
+  @Override
+  public List<Test> getTestsByAuthor(String authorName) {
     //todo
     return null;
+  }
+
+  @Transactional
+  public List<UserTest> getCompletedTestsByUser(String userName) {
+    Query q = getEntityManager().createQuery("SELECT ut FROM Test t, UserTest ut " +
+        "where ut.test.id = t.id and ut.user.userName=:userName");
+    q.setParameter("userName", userName);
+    return  q.getResultList();
   }
 
 }

@@ -16,6 +16,7 @@ public class Test extends BaseEntity {
   private Collection<Question> questions;
   private User author;
   private String caption;
+  private Integer questionCount;
 
   public Test(String caption) {
     this.caption = caption;
@@ -48,5 +49,13 @@ public class Test extends BaseEntity {
 
   public void setCaption(String caption) {
     this.caption = caption;
+  }
+
+  public Integer getQuestionCount() {
+    return questionCount;
+  }
+
+  public void setQuestionCount(Integer questionCount) {
+    this.questionCount = questionCount;
   }
 }

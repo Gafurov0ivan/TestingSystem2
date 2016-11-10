@@ -1,11 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
+<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
-  <title>Мои тесты</title>
+  <title>Завершенные тесты</title>
+
 </head>
 <body>
 
@@ -21,49 +25,41 @@
       <li><a href="/about">CONTACT</a></li>
     </ul>
   </div>
-
 </nav>
+
 <div class="container">
+
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="userTests">MY TESTS</a></li>
-        <li><a href="completedTests">COMPLETED TESTS</a></li>
+        <li><a href="userTests">MY TESTS</a></li>
+        <li class="active"><a href="completedTests">COMPLETED TESTS</a></li>
       </ul>
     </div>
   </nav>
-  <form>
-    <div class="btn-group" role="group" >
-      <button type="submit" class="btn btn-default">Edit</button>
-      <button type="submit" class="btn btn-default">Add new</button>
-      <button type="submit" class="btn btn-default">Delete</button>
-    </div>
-    <table class="table table-bordered">
-      <thead>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Наименование теста</th>
+      <th>Дата прохождения</th>
+      <th>Результат</th>
+      <th>Результат, %</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${tests}" var="test">
       <tr>
-        <th>Наименование теста</th>
+        <td><c:out value="${test.testCaption}"/></td>
+        <td><c:out value="${test.date}"/></td>
+        <td><c:out value="${test.result} из ${test.questionCount}"/></td>
+        <td><c:out value="${test.resultPercent}"/></td>
       </tr>
-      </thead>
-      <tbody>
-      <c:forEach items="${tests}" var="test">
-        <tr>
-          <td>
-            <div>
-              <input type="text" name="id" value="${test.id}" hidden="true"/>
-              <input type="checkbox" name="ck"/>
-              <%--<a href="newTest">--%>
-                <c:out value="${test.caption}"/>
-              <%--</a>--%>
-            </div>
-          </td>
-        </tr>
-      </c:forEach>
-      </tbody>
-    </table>
-
-  </form>
-
+    </c:forEach>
+    </tbody>
+  </table>
 </div>
+
 
 </body>
 </html>

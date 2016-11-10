@@ -3,12 +3,13 @@ package ru.itpark.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import java.math.BigDecimal;
+import java.beans.Transient;
 import java.util.Date;
 
 /**
  * @author Kamila Iskhakova
  *         Created on 09.11.2016
+ * @see ru.itpark.proxy.UserTestProxy
  */
 @Entity
 public class UserTest extends BaseEntity {
@@ -17,7 +18,7 @@ public class UserTest extends BaseEntity {
   private Test test;
   private Date date;
   private Integer result;
-  private BigDecimal resultPercent;
+  private Integer resultPercent;
 
   @ManyToOne(fetch = FetchType.LAZY)
   public User getUser() {
@@ -53,11 +54,10 @@ public class UserTest extends BaseEntity {
     this.result = result;
   }
 
-  public BigDecimal getResultPercent() {
-    return resultPercent;
+  public Integer getResultPercent() {
+    return  (result * 100) / test.getQuestionCount();
   }
 
-  public void setResultPercent(BigDecimal resultPercent) {
-    this.resultPercent = resultPercent;
+  public void setResultPercent(Integer resultPercent) {
   }
 }

@@ -38,6 +38,14 @@ public class MainController {
     return modelAndView;
   }
 
+  @RequestMapping(value = "/completedTests")
+  public ModelAndView getCompletedTests() {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("completedTests");
+    modelAndView.addObject("tests", testService.getCompletedTestsByUser("Kamila"));
+    return modelAndView;
+  }
+
   @RequestMapping(value = "/newTest")
   public ModelAndView newTest() {
       ModelAndView modelAndView = new ModelAndView();

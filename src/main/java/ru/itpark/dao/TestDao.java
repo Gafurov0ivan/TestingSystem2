@@ -1,6 +1,7 @@
 package ru.itpark.dao;
 
 import ru.itpark.model.Test;
+import ru.itpark.model.UserTest;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ import java.util.List;
  */
 public interface TestDao<E> extends BaseDao<E>{
 
-  List<Test> getTestsByAuthor(Long authorId);
+  List<Test> getTestsByAuthor(String authorName);
+  List<UserTest> getCompletedTestsByUser(String userName);
 }
