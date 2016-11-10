@@ -18,7 +18,7 @@
   <tbody>
   <c:forEach items="${tests}" var = "test">
     <tr>
-      <td><c:out value="${test.caption}"/></td>
+      <td> <a href="newTest"><c:out value="${test.caption}"/></a></td>
     </tr>
   </c:forEach>
   </tbody>

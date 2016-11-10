@@ -23,9 +23,11 @@ public class MainController {
   @Autowired
   private TestService testService;
 
-  @RequestMapping(value = "/")
-  public String goToHelloPage() {
-    return "hello";
+  @RequestMapping(value = "/lk")
+  public ModelAndView getLK() {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("lk");
+    return modelAndView;
   }
 
   @RequestMapping(value = "/userTests")

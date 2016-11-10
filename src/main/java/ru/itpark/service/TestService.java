@@ -12,12 +12,8 @@ import java.util.List;
  *         Created on 09.11.2016
  */
 @Service
-public class TestService {
+public interface TestService {
 
-  @Autowired
-  private TestDao testDao;
 
-  public List<Test> getAll() {
-    return testDao.getAll();
-  }
+  public List<Test> getAll();
 }
