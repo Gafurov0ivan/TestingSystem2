@@ -9,7 +9,6 @@ import java.util.Date;
 /**
  * @author Kamila Iskhakova
  *         Created on 09.11.2016
- * @see ru.itpark.proxy.UserTestProxy
  */
 @Entity
 public class UserTest extends BaseEntity {

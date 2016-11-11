@@ -16,5 +16,5 @@ public interface TestService {
 
   List<Test> getAll();
   List<UserTest> getCompletedTestsByUser(String userName);
-  void removeAll(List<Long> ids);
+  String removeAll(List<Long> ids);
 }

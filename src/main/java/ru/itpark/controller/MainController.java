@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.Map;
 
 
 /**
@@ -29,40 +29,28 @@ public class MainController {
   @Autowired
   private TestService testService;
 
-  @RequestMapping(value = "/lk")
-  public ModelAndView getLK() {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("lk");
-    return modelAndView;
-  }
-
   @RequestMapping(value = "/userTests", method = RequestMethod.POST)
   public ModelAndView getUserTests(HttpServletRequest request, HttpServletResponse response) {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("userTests");
+    Map paramMap = request.getParameterMap();
+    String deletingResult = null;
+      if (paramMap.containsKey("delete") && paramMap.containsKey("id")) {
+        String[] srtIds = (String[])request.getParameterMap().get("id");
+        List<Long> ids = new ArrayList<>(srtIds.length);
+        for (String strId : srtIds) {
+          ids.add(Long.parseLong(strId));
+        }
+      deletingResult = testService.removeAll(ids);
+    }
     modelAndView.addObject("tests", testService.getAll());
+    modelAndView.addObject("delRes", deletingResult);
     return modelAndView;
   }
 
   @RequestMapping(value = "/userTests", method = RequestMethod.GET)
   public ModelAndView getUserTestsGet(HttpServletRequest request, HttpServletResponse response) {
     ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("userTests");
-    modelAndView.addObject("tests", testService.getAll());
-    return modelAndView;
-  }
-
-  @RequestMapping(value = "/userTests/delete")
-  public ModelAndView getUserForDelete(HttpServletRequest request, HttpServletResponse response) {
-    ModelAndView modelAndView = new ModelAndView();
-    String url = request.getQueryString();
-    url = url.replace("id=", "");
-    StringTokenizer stringTokenizer = new StringTokenizer(url, "&");
-    List<Long> ids = new ArrayList<>();
-    while (stringTokenizer.hasMoreTokens()) {
-      ids.add(Long.parseLong(stringTokenizer.nextToken()));
-    }
-    testService.removeAll(ids);
     modelAndView.setViewName("userTests");
     modelAndView.addObject("tests", testService.getAll());
     return modelAndView;

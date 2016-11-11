@@ -8,6 +8,7 @@ import ru.itpark.model.Test;
 import ru.itpark.model.UserTest;
 import ru.itpark.service.TestService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,13 +31,22 @@ public class TestServiceImpl implements TestService {
   }
 
   @Transactional
-  public void removeAll(List<Long> ids) {
+  public String removeAll(List<Long> ids) {
+    StringBuilder stringBuilder = new StringBuilder();
+    List<Long> notDeletedIds = new ArrayList<>();
+    int count = 0;
     for (Long id : ids) {
       if (testDao.getCompletedTestsCount(id) == 0L) {
         testDao.remove(id);
+        count++;
       } else {
-        System.out.println("Тест id = " + id + " уже пройден другим пользователем! Удаление невозможно.");
+        notDeletedIds.add(id);
       }
     }
+    stringBuilder.append(count).append(" test(s) deleted.\n");
+    notDeletedIds.stream().forEach(id->{
+      stringBuilder.append("Test id = ").append(id).append(" can't be deleted! Some users already have completed it.\n");
+    });
+    return stringBuilder.toString();
   }
 }

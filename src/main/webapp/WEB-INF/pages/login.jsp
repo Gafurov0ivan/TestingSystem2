@@ -16,6 +16,6 @@
   <input type="submit" value="Войти">
 </form>
 </br>
-<a href="lk">Личный кабинет</a></li>
+<a href="userTests">Личный кабинет</a></li>
 </body>
 </html>

@@ -18,7 +18,7 @@ public class User extends BaseEntity {
   private String password;
   private String fullName;
   private Collection<UserTest> completedTests;
-  private Collection<UserAuthorTest> createdTests;
+  private Collection<Test> createdTests;
 
   public String getPassword() {
     return password;
@@ -67,12 +67,12 @@ public class User extends BaseEntity {
     this.completedTests = completedTests;
   }
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-  public Collection<UserAuthorTest> getCreatedTests() {
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+  public Collection<Test> getCreatedTests() {
     return createdTests;
   }
 
-  public void setCreatedTests(Collection<UserAuthorTest> createdTests) {
+  public void setCreatedTests(Collection<Test> createdTests) {
     this.createdTests = createdTests;
   }
 
