@@ -1,11 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <html>
-<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
   <title>Завершенные тесты</title>
@@ -50,16 +49,22 @@
     <tbody>
     <c:forEach items="${tests}" var="test">
       <tr>
-        <td><c:out value="${test.testCaption}"/></td>
+        <td><c:out value="${test.test.caption}"/></td>
         <td><c:out value="${test.date}"/></td>
-        <td><c:out value="${test.result} из ${test.questionCount}"/></td>
+        <td><c:out value="${test.result} из ${test.test.questionCount}"/></td>
         <td><c:out value="${test.resultPercent}"/></td>
       </tr>
     </c:forEach>
     </tbody>
   </table>
 </div>
-
-
 </body>
+
+<%--<script type="text/javascript">--%>
+  <%--function formatDate(date) {--%>
+    <%--var now = date;--%>
+    <%--return dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");--%>
+
+  <%--}--%>
+<%--</script>--%>
 </html>

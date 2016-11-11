@@ -2,7 +2,7 @@ package ru.itpark.service;
 
 import org.springframework.stereotype.Service;
 import ru.itpark.model.Test;
-import ru.itpark.proxy.UserTestProxy;
+import ru.itpark.model.UserTest;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface TestService {
 
   public List<Test> getAll();
 
-  List<UserTestProxy> getCompletedTestsByUser(String userName);
+  List<UserTest> getCompletedTestsByUser(String userName);
 }

@@ -6,11 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.TestDao;
 import ru.itpark.model.Test;
 import ru.itpark.model.UserTest;
-import ru.itpark.proxy.UserTestProxy;
 import ru.itpark.service.TestService;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,21 +26,7 @@ public class TestServiceImpl implements TestService {
 
 
   @Transactional
-  public List<UserTestProxy> getCompletedTestsByUser(String userName) {
-    SimpleDateFormat sdg = new SimpleDateFormat("dd.MM.yyyy");
-    List<UserTest> tests = testDao.getCompletedTestsByUser(userName);
-    List<UserTestProxy> result = new ArrayList<>();
-    for (UserTest test:tests) {
-      UserTestProxy testProxy = new UserTestProxy();
-      testProxy.setTestCaption(test.getTest().getCaption());
-      if (test.getDate() != null) {
-        testProxy.setDate(sdg.format(test.getDate()));
-      }
-      testProxy.setResult(test.getResult());
-      testProxy.setResultPercent(test.getResultPercent());
-      testProxy.setQuestionCount(test.getTest().getQuestionCount());
-      result.add(testProxy);
-    }
-    return result;
+  public List<UserTest> getCompletedTestsByUser(String userName) {
+    return testDao.getCompletedTestsByUser(userName);
   }
 }
