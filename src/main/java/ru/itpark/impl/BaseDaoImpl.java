@@ -48,9 +48,26 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
   }
 
   @Transactional
+  public void remove(Long id) {
+    E entity = find(id);
+    entityManager.remove(entity);
+  }
+
+  @Transactional
   public List<E> getAll() {
     CriteriaQuery criteriaQuery = getCriteriaQuery();
     criteriaQuery.select(criteriaQuery.from(entityClass));
     return entityManager.createQuery(criteriaQuery).getResultList();
+  }
+
+  @Transactional
+  public void removeAll(List<Long> ids){
+    for (Long id: ids) {
+      remove(id);
+    }
+  }
+
+  public E find(Long id){
+    return entityManager.find(entityClass, id);
   }
 }

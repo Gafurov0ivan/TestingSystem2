@@ -24,9 +24,19 @@ public class TestServiceImpl implements TestService {
     return testDao.getAll();
   }
 
-
   @Transactional
   public List<UserTest> getCompletedTestsByUser(String userName) {
     return testDao.getCompletedTestsByUser(userName);
+  }
+
+  @Transactional
+  public void removeAll(List<Long> ids) {
+    for (Long id : ids) {
+      if (testDao.getCompletedTestsCount(id) == 0L) {
+        testDao.remove(id);
+      } else {
+        System.out.println("Тест id = " + id + " уже пройден другим пользователем! Удаление невозможно.");
+      }
+    }
   }
 }

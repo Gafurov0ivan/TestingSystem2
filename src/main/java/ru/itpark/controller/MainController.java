@@ -4,13 +4,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.model.User;
 import ru.itpark.service.TestService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 
 /**
@@ -30,15 +36,39 @@ public class MainController {
     return modelAndView;
   }
 
-  @RequestMapping(value = "/userTests")
-  public ModelAndView getUserTests() {
+  @RequestMapping(value = "/userTests", method = RequestMethod.POST)
+  public ModelAndView getUserTests(HttpServletRequest request, HttpServletResponse response) {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("userTests");
     modelAndView.addObject("tests", testService.getAll());
     return modelAndView;
   }
 
-  @RequestMapping(value = "/completedTests")
+  @RequestMapping(value = "/userTests", method = RequestMethod.GET)
+  public ModelAndView getUserTestsGet(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("userTests");
+    modelAndView.addObject("tests", testService.getAll());
+    return modelAndView;
+  }
+
+  @RequestMapping(value = "/userTests/delete")
+  public ModelAndView getUserForDelete(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView modelAndView = new ModelAndView();
+    String url = request.getQueryString();
+    url = url.replace("id=", "");
+    StringTokenizer stringTokenizer = new StringTokenizer(url, "&");
+    List<Long> ids = new ArrayList<>();
+    while (stringTokenizer.hasMoreTokens()) {
+      ids.add(Long.parseLong(stringTokenizer.nextToken()));
+    }
+    testService.removeAll(ids);
+    modelAndView.setViewName("userTests");
+    modelAndView.addObject("tests", testService.getAll());
+    return modelAndView;
+  }
+
+  @RequestMapping(value = {"/completedTests"})
   public ModelAndView getCompletedTests() {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("completedTests");
@@ -48,10 +78,10 @@ public class MainController {
 
   @RequestMapping(value = "/newTest")
   public ModelAndView newTest() {
-      ModelAndView modelAndView = new ModelAndView();
-      modelAndView.setViewName("newTest");
-      return modelAndView;
-    }
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("newTest");
+    return modelAndView;
+  }
 
     /** http://localhost:8080/newTest?testObject={%22id%22:1,%22userName%22:%22Marat%22,%22password%22:null}
      * строка такого вида нормально десереализуется

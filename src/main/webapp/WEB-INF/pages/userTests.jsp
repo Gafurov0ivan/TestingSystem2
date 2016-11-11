@@ -32,16 +32,14 @@
       </ul>
     </div>
   </nav>
-  <form>
-    <div class="btn-group" role="group" >
-      <button type="submit" class="btn btn-default">Edit</button>
-      <button type="submit" class="btn btn-default">Add new</button>
+  <form id="form" action="#" method="post" onsubmit="onsubmit();">
+    <div class="btn-group" role="group">
       <button type="submit" class="btn btn-default">Delete</button>
     </div>
     <table class="table table-bordered">
       <thead>
       <tr>
-        <th>Наименование теста</th>
+        <th>Наименование</th>
       </tr>
       </thead>
       <tbody>
@@ -49,21 +47,42 @@
         <tr>
           <td>
             <div>
-              <input type="text" name="id" value="${test.id}" hidden="true"/>
-              <input type="checkbox" name="ck"/>
-              <%--<a href="newTest">--%>
+              <input type="checkbox" name="id" value="${test.id}">
+              <a href="newTest?id=${test.id}">
                 <c:out value="${test.caption}"/>
-              <%--</a>--%>
+              </a>
             </div>
           </td>
         </tr>
       </c:forEach>
       </tbody>
     </table>
-
   </form>
-
+  <form>
+    <a href="newTest" class="btn btn-default">Создать новый тест</a>
+  </form>
 </div>
+<script type="text/javascript">
+  $(function () {
 
+    function onsubmit(){
+//      $('#form').serialize() + '&yournewvar=yournewvalue';
+
+
+      var form = $('#form1');
+      form = form.serializeArray();
+      form = form.concat(
+        {action: "delete"}
+      );
+      console.log("fff");
+      $.post('/change-user-details', form, function(d) {
+        if (d.error) {
+          alert(d.error)
+        }
+      });
+    }
+  });
+
+</script>
 </body>
 </html>

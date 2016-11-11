@@ -7,7 +7,6 @@ import ru.itpark.model.Test;
 import ru.itpark.model.UserTest;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 /**
@@ -32,7 +31,15 @@ public class TestDaoImpl extends BaseDaoImpl implements TestDao {
     Query q = getEntityManager().createQuery("SELECT ut FROM Test t, UserTest ut " +
         "where ut.test.id = t.id and ut.user.userName=:userName");
     q.setParameter("userName", userName);
-    return  q.getResultList();
+    return (List<UserTest>)q.getResultList();
+  }
+
+  @Transactional
+  public Long getCompletedTestsCount(Long id) {
+    Query q = getEntityManager().createQuery("select count(ut.id) from UserTest ut " +
+        "where ut.test.id =:id");
+    q.setParameter("id", id);
+    return (Long) q.getSingleResult();
   }
 
 }

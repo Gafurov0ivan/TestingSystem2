@@ -14,7 +14,7 @@ import java.util.List;
 public interface TestService {
 
 
-  public List<Test> getAll();
-
+  List<Test> getAll();
   List<UserTest> getCompletedTestsByUser(String userName);
+  void removeAll(List<Long> ids);
 }

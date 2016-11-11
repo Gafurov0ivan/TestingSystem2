@@ -11,5 +11,8 @@ public interface BaseDao<E> {
 
   void saveOrUpdate(E entity);
   void remove(E entity);
+  void remove(Long id);
+  void removeAll(List<Long> ids);
+  E find(Long id);
   List<E> getAll();
 }
