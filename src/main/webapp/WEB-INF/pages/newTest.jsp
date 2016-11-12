@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
@@ -34,7 +35,7 @@
     <div class="control-group" id="fields">
       <div class="controls">
         <form role="form" autocomplete="off" lpformnum="1" class="control">
-          <fieldset>
+          <fieldset class="myclass">
             <div class="form-group">
               <label class="control-label" for="question">Текст вопроса</label>
               <textarea class="form-control" id="questiontext" name="question" rows="2">Введите текст вопроса</textarea>
@@ -47,13 +48,13 @@
               <div class=" required">
                 <div class="radio">
                   <label class="radio-custom" data-initialize="radio" id="radios-0">
-                    <input name="radios" type="radio" value="Один">
+                    <input name="radios" type="radio" value="single">
                     <span class="radio-label">Один</span>
                   </label>
                 </div>
                 <div class="radio">
                   <label class="radio-custom" data-initialize="radio" id="radios-1">
-                    <input name="radios" type="radio" value="Несколько">
+                    <input name="radios" type="radio" value="multiple">
                     <span class="radio-label">Несколько</span>
                   </label>
                 </div>
@@ -62,41 +63,19 @@
             <label id="answers" class="control-label">Варианты ответов</label>
 
             <div class="entry input-group form-group">
-              <input class="form-control" name="fields[]" type="text"
-                     placeholder="Введите вариант ответа" id="field1">
+              <div class="input-group-addon"><input type="checkbox" name="s[]" value="ch1" class="chkbx"></div>
+              <input class="form-control forclone" name="field[0]" type="text" placeholder="Введите вариант ответа" id="field1">
               <span class="input-group-btn">
                             <button class="btn btn-success btn-add" type="button">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
-                        </span>
+                            </span>
             </div>
-
           </fieldset>
+          <button type="submit" formmethod="post" id="submitForm" class="btn btn-primary" aria-label="">
+            Сохранить
+          </button>
         </form>
-        <div class="form-group">
-          <label class="control-label" for="addquestion"></label>
-          <div class="text-center">
-            <button type="button" id="addquestion" name="addquestion" class="btn btn-primary btn-add-form clone" aria-label="">
-              Добавить вопрос
-            </button>
-
-          </div>
-
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="addquestion"></label>
-          <div class="text-center">
-            <button type="button" id="savetest" name="addquestion" class="btn btn-primary btn-add-form" aria-label="">
-              Получить JSON формы
-            </button>
-
-          </div>
-
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="jsonfld">JSON</label>
-          <textarea class="form-control" id="jsonField" name="question" rows="5"></textarea>
-        </div>
       </div>
     </div>
   </div>
@@ -117,11 +96,16 @@
     $(document).on('click', '.btn-add', function (e) {
       e.preventDefault();
 
-      var controlForm = $('.controls form:first'),
+      var controlForm = $('.myclass'),
               currentEntry = $(this).parents('.entry:first'),
               newEntry = $(currentEntry.clone()).appendTo(controlForm);
-
+      nm = $('.forclone').length
+      finded = newEntry.find('input');
+      attrib = finded.attr('type');
       newEntry.find('input').val('');
+      newEntry.find('input').attr('name','filed[' + nm + ']');
+      controlForm.find('.entry:last .chkbx').val('ch' + nm);
+      controlForm.find('.entry:last .chkbx').attr('name','s[]');
       controlForm.find('.entry:not(:last) .btn-add')
               .removeClass('btn-add').addClass('btn-remove')
               .removeClass('btn-success').addClass('btn-danger')
@@ -133,50 +117,6 @@
       return false;
     });
   });
-
-</script>
-<script type="text/javascript">
-  var regex = /^(.+?)(\d+)$/i;
-  var cloneIndex = $(".clonedInput").length;
-
-  function clone(){
-    $(this).parents(".clonedInput").clone()
-            .appendTo("controls")
-            .attr("id", "clonedInput" +  cloneIndex)
-            .find("*")
-            .each(function() {
-              var id = this.id || "";
-              var match = id.match(regex) || [];
-              if (match.length == 3) {
-                this.id = match[1] + (cloneIndex);
-              }
-            })
-            .on('click', 'button.clone', clone)
-            .on('click', 'button.remove', remove);
-    cloneIndex++;
-  }
-  function remove(){
-    $(this).parents(".clonedInput").remove();
-  }
-  $("button.clone").on("click", clone);
-  $("button.remove").on("click", remove);
-
-
-</script>
-<script type="text/javascript">
-  $(function () {
-    $(document).on('click', '.btn-add-form', function (e) {
-      e.preventDefault();
-
-
-      var frm = $("form.control");
-      var formdata = JSON.stringify(frm);
-      document.getElementById("jsonField").value = formdata;
-      e.preventDefault();
-      return formdata;
-    });
-  });
-
 
 </script>
 </body>
