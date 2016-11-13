@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Answer extends BaseEntity {
 
-	@ManyToOne(fetch = FetchType.LAZY)
 	private Question question;
 	private String text;
 	private boolean isCorrect;
@@ -15,13 +14,14 @@ public class Answer extends BaseEntity {
 	protected Answer() {
 	}
 
-  public Answer(Long id, Question question, String text, boolean isCorrect) {
-    setId(id);
+  public Answer( Question question, String text, boolean isCorrect) {
+
 		this.text = text;
 		this.isCorrect = isCorrect;
 		this.question = question;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
 	public Question getQuestion() {
 		return question;
 	}

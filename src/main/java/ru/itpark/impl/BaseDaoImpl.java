@@ -50,7 +50,9 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
   @Transactional
   public void remove(Long id) {
     E entity = find(id);
-    entityManager.remove(entity);
+    if (entity != null) {
+      entityManager.remove(entity);
+    }
   }
 
   @Transactional

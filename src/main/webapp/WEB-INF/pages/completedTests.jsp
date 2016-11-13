@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
-    <title>Завершенные тесты</title>
+    <title>Completed tests</title>
 </head>
 <body>
 
@@ -20,7 +20,7 @@
         <ul class="nav navbar-nav">
             <li><a href="/">HOME</a></li>
             <li class="active"><a href="/userTests">MY PROFILE</a></li>
-            <li><a href="#">ADD TEST</a></li>
+            <li><a href="/newTest">ADD TEST</a></li>
             <li><a href="/about">CONTACT</a></li>
         </ul>
     </div>
@@ -40,10 +40,10 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Наименование теста</th>
-            <th>Дата прохождения</th>
-            <th>Результат</th>
-            <th>Результат, %</th>
+            <th>Test name</th>
+            <th>Date</th>
+            <th>Result</th>
+            <th>Result, %</th>
         </tr>
         </thead>
         <tbody>

@@ -21,8 +21,8 @@ public class TestServiceImpl implements TestService {
   @Autowired
   private TestDao testDao;
 
-  public List<Test> getAll() {
-    return testDao.getAll();
+  public List<Test> getTests(String userName) {
+    return testDao.getTestsByAuthor(userName);
   }
 
   @Transactional
@@ -44,9 +44,17 @@ public class TestServiceImpl implements TestService {
       }
     }
     stringBuilder.append(count).append(" test(s) deleted.\n");
-    notDeletedIds.stream().forEach(id->{
+    notDeletedIds.stream().forEach(id -> {
       stringBuilder.append("Test id = ").append(id).append(" can't be deleted! Some users already have completed it.\n");
     });
     return stringBuilder.toString();
+  }
+
+  public Test getTest(Long id) {
+    return (Test)testDao.find(id);
+  }
+
+  public void save(Test test) {
+    testDao.saveOrUpdate(test);
   }
 }

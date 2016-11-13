@@ -13,8 +13,9 @@ import java.util.List;
 @Service
 public interface TestService {
 
-
-  List<Test> getAll();
+  List<Test> getTests(String userName);
   List<UserTest> getCompletedTestsByUser(String userName);
   String removeAll(List<Long> ids);
+  Test getTest(Long id);
+  void save(Test test);
 }

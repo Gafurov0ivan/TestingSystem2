@@ -17,5 +17,6 @@
 </form>
 </br>
 <a href="userTests">Личный кабинет</a></li>
+<a href="test">Прохождение теста</a></li>
 </body>
 </html>

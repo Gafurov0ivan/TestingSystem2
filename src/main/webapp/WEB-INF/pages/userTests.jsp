@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
-    <title>Мои тесты</title>
+    <title>My tests</title>
 </head>
 <body>
 
@@ -17,11 +17,10 @@
         <ul class="nav navbar-nav">
             <li><a href="/">HOME</a></li>
             <li class="active"><a href="/userTests">MY PROFILE</a></li>
-            <li><a href="#">ADD TEST</a></li>
+            <li><a href="/newTest">ADD TEST</a></li>
             <li><a href="/about">CONTACT</a></li>
         </ul>
     </div>
-
 </nav>
 <div class="container">
     <nav class="navbar navbar-default">
@@ -40,7 +39,7 @@
             <thead>
             <tr>
                 <th width="10"><input type="checkbox" onclick="selectAll(this)"/></th>
-                <th>Наименование</th>
+                <th>Test</th>
             </tr>
             </thead>
             <tbody>
@@ -63,7 +62,7 @@
     </form>
     <form>${delRes}</form>
     <form>
-        <a href="newTest" class="btn btn-default">Создать новый тест</a>
+        <a href="newTest" class="btn btn-default">ADD NEW TEST</a>
     </form>
 </div>
 <script type="text/javascript">
