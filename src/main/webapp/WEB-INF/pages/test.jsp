@@ -25,12 +25,10 @@
 </nav>
 </div>
 
-
 <div class="container col-md-4"></div>
 <div class="container col-md-4">
     <div class="row">
         <h2>Тест "${test.caption}"</h2>
-
         <form>
             <c:forEach items="${test.questions}" var="qu">
                 <c:out value="${qu.question}"/>

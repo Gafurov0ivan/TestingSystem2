@@ -1,5 +1,6 @@
 package ru.itpark.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -13,9 +14,9 @@ import java.util.Collection;
 @Entity
 public class Question extends BaseEntity {
 
-  private Test test;            // ссылка на тест
-  private String question;      // вопрос
-  private Integer answerCount;  // количество правльных ответов
+  private Test test;
+  private String question;
+  private Integer answerCount;
   private Collection<Answer> answers;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -43,7 +44,8 @@ public class Question extends BaseEntity {
     this.answerCount = answerCount;
   }
 
-  @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "question", fetch = FetchType.LAZY,
+          cascade = CascadeType.PERSIST, orphanRemoval = true)
   public Collection<Answer> getAnswers() {
     return answers;
   }

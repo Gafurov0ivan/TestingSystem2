@@ -50,6 +50,7 @@ public class TestServiceImpl implements TestService {
     return stringBuilder.toString();
   }
 
+  @Transactional
   public Test getTest(Long id) {
     return (Test)testDao.find(id);
   }

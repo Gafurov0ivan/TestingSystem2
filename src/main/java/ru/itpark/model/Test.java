@@ -1,6 +1,10 @@
 package ru.itpark.model;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Collection;
 
 /**
@@ -22,7 +26,8 @@ public class Test extends BaseEntity {
   public Test() {
   }
 
-  @OneToMany(mappedBy = "test", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "test", fetch = FetchType.LAZY,
+          cascade = CascadeType.PERSIST, orphanRemoval = true)
   public Collection<Question> getQuestions() {
     return questions;
   }

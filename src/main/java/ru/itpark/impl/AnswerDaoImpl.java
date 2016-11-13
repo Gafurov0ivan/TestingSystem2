@@ -10,7 +10,7 @@ import ru.itpark.model.Question;
 public class AnswerDaoImpl extends BaseDaoImpl implements AnswerDao {
 
 	public AnswerDaoImpl() {
-		super(Question.class);
+		super(Answer.class);
 	}
 
 	@Transactional
@@ -28,11 +28,11 @@ public class AnswerDaoImpl extends BaseDaoImpl implements AnswerDao {
 	public void deleteAnswerbyQuestion(Long questionId) {
 	}
 
-	@Override
-	public void saveOrUpdate(Object entity) {
-	}
+//	@Override
+//	public void saveOrUpdate(Object entity) {
+//	}
 
-	@Override
-	public void remove(Object entity) {
-	}
+//	@Override
+//	public void remove(Object entity) {
+//	}
 }
