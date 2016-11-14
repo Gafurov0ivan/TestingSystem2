@@ -10,7 +10,7 @@
 
 
 <div class="container col-md-7">
-    <img src="/resources/images/homer-computer-doh.jpg">
+    <img src="/resources/images/hom.jpg">
 </div>
 <div class="container col-md-5">
     <div style="text-align: center;" ><h1>Error 404!</h1></div>

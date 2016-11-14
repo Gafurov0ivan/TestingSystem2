@@ -3,6 +3,7 @@ package ru.itpark.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -16,7 +17,6 @@ public class UserTest extends BaseEntity {
   private Test test;
   private Date date;
   private Integer result;
-  private Integer resultPercent;
 
   @ManyToOne(fetch = FetchType.LAZY)
   public User getUser() {
@@ -52,6 +52,7 @@ public class UserTest extends BaseEntity {
     this.result = result;
   }
 
+  @Transient
   public Integer getResultPercent() {
     return  (result * 100) / test.getQuestionCount();
   }

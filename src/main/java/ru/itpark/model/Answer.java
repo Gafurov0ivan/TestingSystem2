@@ -11,16 +11,6 @@ public class Answer extends BaseEntity {
 	private String text;
 	private boolean isCorrect;
 
-	protected Answer() {
-	}
-
-  public Answer( Question question, String text, boolean isCorrect) {
-
-		this.text = text;
-		this.isCorrect = isCorrect;
-		this.question = question;
-	}
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Question getQuestion() {
 		return question;

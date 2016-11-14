@@ -35,10 +35,14 @@
           </div>
           <legend></legend>
           <div class="form-group">
-            <label class="control-label">Ваш результат ${testResult} из ${questionCount}</label>
+            <label class="control-label">Ваш результат ${testResult} из ${questionCount}
+              (${testResultPercent} %)</label>
           </div>
           <form>
-            <a href="completedTests" class="btn btn-primary">Перейти к пройденным тестам</a>
+            <div class="row">
+              <a href="completedTests" class="btn btn-primary">Перейти к пройденным тестам</a>
+              <a href="showTest?id=${testId}" class="btn btn-primary">Посмотерть ответы</a>
+            </div>
           </form>
         </form>
       </div>

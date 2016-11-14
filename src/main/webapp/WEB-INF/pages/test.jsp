@@ -30,33 +30,26 @@
     <div class="row">
         <div class="control-group" id="fields">
             <div class="controls">
-                <form role="form" autocomplete="off" lpformnum="1" class="control">
+                <form class="control">
                     <fieldset class="myclass">
                         <div class="form-group">
                             <input type="hidden" name="testId" value="${test.id}">
-                            <label class="control-label" >${test.caption}</label>
+                            <label class="control-label">${test.caption}</label>
                         </div>
                         <legend></legend>
-
-                        <c:forEach items="${test.questions}" var="qu">
-                        <div class="form-group">
-                            <div class="text">
-                                    ${qu.question}
+                        <c:forEach items="${test.questions}" var="qu" varStatus="loop">
+                            <div class="row">
+                                <div class="text">${loop.index+1}. ${qu.question}</div>
+                                <i>Выберите ${qu.answerCount} варианта(ов).</i>
+                                <c:forEach items="${qu.answers}" var="answer">
+                                    <div class="row">
+                                        <input type="checkbox" name="${qu.id}" value="${answer.id}"/>
+                                        <c:out value="${answer.text}"/>
+                                    </div>
+                                </c:forEach>
+                                <br/>
                             </div>
-                            <div class="text" id="quCount" onload="formatText${qu.answerCount})">
-                            </div>
-                            <c:forEach items="${qu.answers}" var="answer">
-                                <div class="row">
-                                    <input type="checkbox" name="${qu.id}" value="${answer.id}">
-                                    <%--<input type="radio" value="${answer.id}">--%>
-                                    <c:out value="${answer.text}"/>
-                                    <c:out value="${answer.isCorrect}"/>
-                                </div>
-                            </c:forEach>
-                            <br/>
-                        </div>
                         </c:forEach>
-
                     </fieldset>
                     <button type="submit" formmethod="post" id="submitForm" class="btn btn-primary" aria-label="">
                         Узнать результат

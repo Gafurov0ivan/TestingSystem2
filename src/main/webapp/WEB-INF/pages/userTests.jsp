@@ -22,7 +22,8 @@
         </ul>
     </div>
 </nav>
-<div class="container">
+<div class="container col-md-2"></div>
+<div class="container col-md-8">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
@@ -60,11 +61,12 @@
             </tbody>
         </table>
     </form>
-    <form>${delRes}</form>
+    <div class="text" style="color: #EF3B3A">${delRes}</div>
     <form>
-        <a href="editTest" class="btn btn-default">ADD NEW TEST</a>
+        <a href="editTest" class="btn btn-primary">ADD NEW TEST</a>
     </form>
 </div>
+<div class="container col-md-2"></div>
 <script type="text/javascript">
 
     $('#subButton').click(function () {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.TestDao;
+import ru.itpark.dao.UserDao;
 import ru.itpark.dao.UserTestDao;
 import ru.itpark.model.Answer;
 import ru.itpark.model.Question;
@@ -34,6 +35,8 @@ public class TestServiceImpl implements TestService {
   @Autowired
   private UserTestDao userTestDao;
 
+  @Autowired
+  private UserDao userDao;
 
   public List<Test> getTests(String userName) {
     return testDao.getTestsByAuthor(userName);
@@ -73,7 +76,6 @@ public class TestServiceImpl implements TestService {
     return (Test)testDao.find(id);
   }
 
-
   public int checkTest(Map requestParam, Test test) {
     int count = 0;
     if (test != null) {
@@ -93,12 +95,10 @@ public class TestServiceImpl implements TestService {
           count++;
         }
       }
-      //saveFinishedTestInfo(test, userDao.getUser("Kamila"), count);
+      saveFinishedTestInfo(test, userDao.getUser("Kamila"), count);
     }
-
     return count;
   }
-
 
 
   private Map<Long, Set<Long>> getAnswerMap(List<Question> questions) {

@@ -26,8 +26,8 @@
     </div>
 </nav>
 
-<div class="container">
-
+<div class="container col-md-2"></div>
+<div class="container col-md-8">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
@@ -58,5 +58,6 @@
         </tbody>
     </table>
 </div>
+<div class="container col-md-2"></div>
 </body>
 </html>
