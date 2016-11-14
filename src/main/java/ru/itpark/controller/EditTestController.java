@@ -7,6 +7,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.dao.QuestionDao;
 import ru.itpark.model.Question;
+import ru.itpark.model.Test;
 import ru.itpark.service.QuestionService;
 import ru.itpark.service.TestService;
 
@@ -26,18 +27,28 @@ public class EditTestController {
     public ModelAndView newTest (WebRequest webRequest)
     {
         String description = webRequest.getParameter("radios");
-        Long testId = Long.parseLong(webRequest.getParameter("id"));
+        Map<String , String[]> a =webRequest.getParameterMap();
+        Long testId = null;
+        Long questionId = null;
+        if (a.containsKey("id")) {
+            testId = Long.parseLong(webRequest.getParameter("id"));
+        }
+        if (a.containsKey("questionId")){
+            questionId = Long.parseLong(webRequest.getParameter("questionId"));
+        }
         if (testId != null) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("editTest");
+            Test test = testService.getTest(testId);
             modelAndView.addObject("test", testService.getTest(testId));
+            modelAndView.addObject("qId", new Long(questionId == null?1:questionId));
             return modelAndView;
         }
-
-        Map<String , String[]> a =webRequest.getParameterMap();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editTest");
         //modelAndView.addObject("test", testService.getTest(1L));
         return modelAndView;
     }
+
+
 }

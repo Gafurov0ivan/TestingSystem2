@@ -1,4 +1,4 @@
-<jsp:useBean id="test" scope="request" type="ru.itpark.model.Test"/>
+
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -30,7 +30,14 @@
     </div>
   </nav>
   <div>
-    <button class = "btn btn-primary btn-sm">rewrew</button>
+    <c:set var="i" value="1"/>
+    <jsp:useBean id="test" scope="request" type="ru.itpark.model.Test"/>
+    <c:forEach items="${test.questions}" var="question" >
+      <jsp:useBean id="qId" scope="request" type="java.lang.Long"/>
+      <a class = "btn btn-sm btn-upper ${(qId.toString().equals(i.toString())) ? 'btn-primary' : 'btn-info'}" href="/editTest?id=${test.id}&questionId=${i}">#${i}</a>
+      <c:set var="i" value="${i+1}"/>
+    </c:forEach>
+    <button class = "btn btn-success btn-sm btn-upper"><span class="glyphicon glyphicon-plus"></span></button>
 
   </div>
 </div>
@@ -44,7 +51,7 @@
           <fieldset class="myclass">
             <div class="form-group">
               <label class="control-label" for="question">Текст вопроса</label>
-              <textarea class="form-control" id="questiontext" name="question" rows="2">${test.getQuestion(0).question}</textarea>
+              <textarea class="form-control" id="questiontext" name="question" rows="2">${test.getQuestion(qId-1).question}</textarea>
             </div>
             <!-- Form Name -->
             <legend></legend>
@@ -54,13 +61,13 @@
               <div class=" required">
                 <div class="radio">
                   <label class="radio-custom" data-initialize="radio" id="radios-0">
-                    <input name="radios" type="radio" value="single">
+                    <input name="radios" type="radio" value="single"<c:if test="${test.questionCount == 1}">checked</c:if>/>
                     <span class="radio-label">Один</span>
                   </label>
                 </div>
                 <div class="radio">
                   <label class="radio-custom" data-initialize="radio" id="radios-1">
-                    <input name="radios" type="radio" value="multiple">
+                    <input name="radios" type="radio" value="multiple" <c:if test="${test.questionCount == 2}">checked</c:if>>
                     <span class="radio-label">Несколько</span>
                   </label>
                 </div>
@@ -68,15 +75,35 @@
             </div>
             <label id="answers" class="control-label">Варианты ответов</label>
 
-            <div class="entry input-group form-group">
-              <div class="input-group-addon"><input type="checkbox" name="s[]" value="ch1" class="chkbx"></div>
-              <input class="form-control forclone" name="field[0]" type="text" placeholder="Введите вариант ответа" id="field1">
+
+              <c:set var="j" value="1"/>
+              <c:forEach items="${test.getQuestion(qId-1).answers}" var="answer">
+              <div class="entry input-group form-group">
+              <div class="input-group-addon">
+                <input type="checkbox" name="s[]" value="ch${j}" class="chkbx" <c:if test="${answer.isCorrect}">checked</c:if>/>
+              </div>
+              <input class="form-control forclone" name="field[${j-1}]" type="text" placeholder="Введите вариант ответа" id="field${j}" value="${answer.text}">
               <span class="input-group-btn">
-                            <button class="btn btn-success btn-add" type="button">
+                            <button class="btn ${j.toString().equals(test.getQuestion(qId-1).answers.size().toString()) ? 'btn-add btn-success ' : 'btn-remove btn-danger'}" type="button">
+                                <span class="${j.toString().equals(test.getQuestion(qId-1).answers.size().toString()) ? 'glyphicon glyphicon-plus' : 'glyphicon glyphicon-minus'}"></span>
+                            </button>
+                            </span>
+              </div>
+                <c:set var="j" value="${j+1}"/>
+                </c:forEach>
+            <c:if test="${test.getQuestion(qId-1).answers == null || test.getQuestion(qId-1).answers.size() == 0}">
+              <div class="entry input-group form-group">
+                <div class="input-group-addon"><input type="checkbox" name="s[]" value="ch1" class="chkbx"></div>
+                <input class="form-control forclone" name="field[0]" type="text" placeholder="Введите вариант ответа" id="field1" >
+                <span class="input-group-btn">
+                            <button class="btn btn-add btn-success" type="button">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
                             </span>
-            </div>
+              </div>
+            </c:if>
+
+
           </fieldset>
           <button type="submit" formmethod="post" id="submitForm" class="btn btn-primary" aria-label="">
             Сохранить
