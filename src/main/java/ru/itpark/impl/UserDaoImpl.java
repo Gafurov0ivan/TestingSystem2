@@ -24,4 +24,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao  {
         .setParameter("password", password)
         .getSingleResult();
   }
+
+  @Override
+  public User getUser(String userName) {
+    return (User)getEntityManager().createQuery(
+        "SELECT u FROM User u WHERE u.userName= :userName")
+        .setParameter("userName", userName)
+        .getSingleResult();
+  }
 }

@@ -3,7 +3,6 @@ package ru.itpark.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import java.beans.Transient;
 import java.util.Date;
 
 /**

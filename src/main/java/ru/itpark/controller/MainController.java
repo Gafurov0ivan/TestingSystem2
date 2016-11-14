@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ru.itpark.model.Test;
 import ru.itpark.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +26,7 @@ public class MainController {
   private TestService testService;
 
   @RequestMapping(value = "/userTests", method = RequestMethod.POST)
-  public ModelAndView getUserTests(HttpServletRequest request) {
+  public ModelAndView getPostUserTests(HttpServletRequest request) {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("userTests");
     Map paramMap = request.getParameterMap();
@@ -48,7 +50,7 @@ public class MainController {
     return modelAndView;
   }
 
-  @RequestMapping(value = "/completedTests")
+  @RequestMapping(value = "/completedTests", method = RequestMethod.GET)
   public ModelAndView getCompletedTests() {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("completedTests");
@@ -57,10 +59,45 @@ public class MainController {
   }
 
   @RequestMapping(value = "/test", method = RequestMethod.GET)
-  public ModelAndView getTest() {
+  public ModelAndView getTest(WebRequest request) {
     ModelAndView modelAndView = new ModelAndView();
-   // modelAndView.addObject("test", testService.getTest(16L));
-    modelAndView.setViewName("test");
+    String idStr = request.getParameter("id");
+    if (idStr != null && !idStr.isEmpty()) {
+      Long testId = Long.parseLong(request.getParameter("id"));
+      Test test = testService.getTest(testId);
+      if (test != null) {
+        modelAndView.addObject("test", test);
+        modelAndView.setViewName("test");
+      } else {
+        modelAndView.setViewName("errorpage");
+      }
+    } else {
+      modelAndView.setViewName("errorpage");
+    }
     return modelAndView;
   }
+
+  @RequestMapping(value = "/test", method = RequestMethod.POST)
+  public ModelAndView getPostTest(HttpServletRequest request) {
+    ModelAndView modelAndView = new ModelAndView();
+    String idStr = request.getParameter("id");
+    if (idStr != null && !idStr.isEmpty()) {
+      Long testId = Long.parseLong(request.getParameter("id"));
+      Test test = testService.getTest(testId);
+      Map paramMap = request.getParameterMap();
+      modelAndView.addObject("testResult", testService.checkTest(paramMap, test));
+      modelAndView.addObject("testCaption", test.getCaption());
+      modelAndView.addObject("questionCount", test.getQuestionCount());
+    }
+    modelAndView.setViewName("result");
+    return modelAndView;
+  }
+
+  @RequestMapping(value = "/result", method = RequestMethod.POST)
+  public ModelAndView getResult(HttpServletRequest request) {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("result");
+    return modelAndView;
+  }
+
 }

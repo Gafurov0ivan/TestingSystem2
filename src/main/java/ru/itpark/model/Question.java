@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Kamila Iskhakova
@@ -17,7 +17,7 @@ public class Question extends BaseEntity {
   private Test test;
   private String question;
   private Integer answerCount;
-  private Collection<Answer> answers;
+  private List<Answer> answers;
 
   @ManyToOne(fetch = FetchType.LAZY)
   public Test getTest() {
@@ -46,11 +46,11 @@ public class Question extends BaseEntity {
 
   @OneToMany(mappedBy = "question", fetch = FetchType.LAZY,
           cascade = CascadeType.PERSIST, orphanRemoval = true)
-  public Collection<Answer> getAnswers() {
+  public List<Answer> getAnswers() {
     return answers;
   }
 
-  public void setAnswers(Collection<Answer> answers) {
+  public void setAnswers(List<Answer> answers) {
     this.answers = answers;
   }
 }

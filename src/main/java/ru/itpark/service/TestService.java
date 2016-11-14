@@ -2,9 +2,11 @@ package ru.itpark.service;
 
 import org.springframework.stereotype.Service;
 import ru.itpark.model.Test;
+import ru.itpark.model.User;
 import ru.itpark.model.UserTest;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Kamila Iskhakova
@@ -18,4 +20,5 @@ public interface TestService {
   String removeAll(List<Long> ids);
   Test getTest(Long id);
   void save(Test test);
+  int checkTest(Map map, Test test);
 }

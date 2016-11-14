@@ -50,7 +50,7 @@
         <c:forEach items="${tests}" var="test">
             <tr>
                 <td><c:out value="${test.test.caption}"/></td>
-                <td><fmt:formatDate value="${test.date}" pattern="dd.MM.yyyy"/></td>
+                <td><fmt:formatDate value="${test.date}" pattern="dd.MM.yyyy HH:mm"/></td>
                 <td><c:out value="${test.result} из ${test.test.questionCount}"/></td>
                 <td><c:out value="${test.resultPercent}"/></td>
             </tr>

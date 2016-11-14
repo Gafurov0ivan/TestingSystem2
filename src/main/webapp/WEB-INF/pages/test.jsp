@@ -23,34 +23,49 @@
         </ul>
     </div>
 </nav>
-</div>
 
 <div class="container col-md-4"></div>
+
 <div class="container col-md-4">
     <div class="row">
-        <h2>Тест "${test.caption}"</h2>
-        <form>
-            <c:forEach items="${test.questions}" var="qu">
-                <c:out value="${qu.question}"/>
-                <c:if test="${qu.answerCount}>1">
-                    <div class="text">
-                        Выберите ${qu.answerCount} правильных вариантов
-                    </div>
-                </c:if>
-                <c:forEach items="${qu.answers}" var="answer">
-                    <div class="row">
-                        <input type="checkbox" value="${answer.id}">
-                        <input type="radio" value="${answer.id}">
-                        <c:out value="${answer.text}"/>
-                    </div>
-                </c:forEach>
-                <br/>
-            </c:forEach>
-            <button type="submit" class="btn btn-default">Finish</button>
-        </form>
+        <div class="control-group" id="fields">
+            <div class="controls">
+                <form role="form" autocomplete="off" lpformnum="1" class="control">
+                    <fieldset class="myclass">
+                        <div class="form-group">
+                            <input type="hidden" name="testId" value="${test.id}">
+                            <label class="control-label" >${test.caption}</label>
+                        </div>
+                        <legend></legend>
+
+                        <c:forEach items="${test.questions}" var="qu">
+                        <div class="form-group">
+                            <div class="text">
+                                    ${qu.question}
+                            </div>
+                            <div class="text" id="quCount" onload="formatText${qu.answerCount})">
+                            </div>
+                            <c:forEach items="${qu.answers}" var="answer">
+                                <div class="row">
+                                    <input type="checkbox" name="${qu.id}" value="${answer.id}">
+                                    <%--<input type="radio" value="${answer.id}">--%>
+                                    <c:out value="${answer.text}"/>
+                                    <c:out value="${answer.isCorrect}"/>
+                                </div>
+                            </c:forEach>
+                            <br/>
+                        </div>
+                        </c:forEach>
+
+                    </fieldset>
+                    <button type="submit" formmethod="post" id="submitForm" class="btn btn-primary" aria-label="">
+                        Узнать результат
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 <div class="container col-md-4"></div>
-
 </body>
 </html>
