@@ -1,12 +1,14 @@
+<jsp:useBean id="test" scope="request" type="ru.itpark.model.Test"/>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+  <link rel="stylesheet" href="<c:url value="/resources/css/editTest.css" />" >
 
 </head>
 
@@ -27,6 +29,10 @@
       </ul>
     </div>
   </nav>
+  <div>
+    <button class = "btn btn-primary btn-sm">rewrew</button>
+
+  </div>
 </div>
 <div class="container col-md-1"></div>
 <div class="container col-md-4"></div>
@@ -38,7 +44,7 @@
           <fieldset class="myclass">
             <div class="form-group">
               <label class="control-label" for="question">Текст вопроса</label>
-              <textarea class="form-control" id="questiontext" name="question" rows="2">Введите текст вопроса</textarea>
+              <textarea class="form-control" id="questiontext" name="question" rows="2">${test.getQuestion(0).question}</textarea>
             </div>
             <!-- Form Name -->
             <legend></legend>

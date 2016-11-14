@@ -50,7 +50,7 @@
                     </td>
                     <td>
                         <div>
-                            <a href="newTest?id=${test.id}">
+                            <a href="editTest?id=${test.id}">
                                 <c:out value="${test.caption}"/>
                             </a>
                         </div>
@@ -62,7 +62,7 @@
     </form>
     <form>${delRes}</form>
     <form>
-        <a href="newTest" class="btn btn-default">ADD NEW TEST</a>
+        <a href="editTest" class="btn btn-default">ADD NEW TEST</a>
     </form>
 </div>
 <script type="text/javascript">

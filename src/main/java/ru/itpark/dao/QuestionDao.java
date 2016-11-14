@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface QuestionDao<E> extends BaseDao<E> {
 
-  List<Question> getQuestions(Long testId);
+  List<Question> getQuestionsByTestId(Long testId);
 }

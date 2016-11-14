@@ -1,9 +1,14 @@
 package ru.itpark.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ru.itpark.dao.QuestionDao;
+import ru.itpark.model.Question;
+import ru.itpark.service.QuestionService;
+import ru.itpark.service.TestService;
 
 import java.util.Map;
 
@@ -13,29 +18,26 @@ import java.util.Map;
 
 @Controller
 public class EditTestController {
-    @RequestMapping(value = "/newTest")
+
+    @Autowired
+    private TestService testService;
+
+    @RequestMapping(value = "/editTest")
     public ModelAndView newTest (WebRequest webRequest)
     {
         String description = webRequest.getParameter("radios");
-        Map<String , String[]> a =webRequest.getParameterMap();
-        for (String s: a.keySet()){
-            System.out.println(s);
-            String[] strings = a.get(s);
-            for (String st:strings) {
-                System.out.println("--" + st);
-            }
-        }
-        if (description  != null)
-        {
-            System.out.println(description);
-        }
-        else
-        {
-            System.out.println("NO RADIOS");
+        Long testId = Long.parseLong(webRequest.getParameter("id"));
+        if (testId != null) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("editTest");
+            modelAndView.addObject("test", testService.getTest(testId));
+            return modelAndView;
         }
 
+        Map<String , String[]> a =webRequest.getParameterMap();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("newTest");
+        modelAndView.setViewName("editTest");
+        //modelAndView.addObject("test", testService.getTest(1L));
         return modelAndView;
     }
 }

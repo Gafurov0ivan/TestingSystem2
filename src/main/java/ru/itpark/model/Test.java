@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -30,6 +31,11 @@ public class Test extends BaseEntity {
           cascade = CascadeType.PERSIST, orphanRemoval = true)
   public Collection<Question> getQuestions() {
     return questions;
+  }
+
+  public Question getQuestion(int id){
+    ArrayList<Question> qs = new ArrayList<>(questions);
+    return qs.get(id);
   }
 
   public void setQuestions(Collection<Question> questions) {

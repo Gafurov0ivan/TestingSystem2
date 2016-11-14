@@ -4,7 +4,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.QuestionDao;
 import ru.itpark.model.Question;
+import ru.itpark.model.Test;
 
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -19,8 +21,11 @@ public class QuestionDaoImpl extends BaseDaoImpl implements QuestionDao {
   }
 
   @Transactional
-  public List<Question> getQuestions(Long testId){
-    //todo
-    return null;
+  @Override
+  public List<Question> getQuestionsByTestId(Long testId) {
+    Query q = getEntityManager().createQuery("SELECT t FROM Question t " +
+            "where t.test.id=:testId");
+    q.setParameter("testId", testId);
+    return (List<Question>) q.getResultList();
   }
 }
