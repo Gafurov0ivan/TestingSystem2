@@ -22,8 +22,10 @@ public class TestDaoImpl extends BaseDaoImpl implements TestDao {
 
   @Override
   public List<Test> getTestsByAuthor(String authorName) {
-    //todo
-    return null;
+    Query q = getEntityManager().createQuery("SELECT t FROM Test t " +
+        "where t.author.userName=:authorName");
+    q.setParameter("authorName", authorName);
+    return (List<Test>)q.getResultList();
   }
 
   @Transactional

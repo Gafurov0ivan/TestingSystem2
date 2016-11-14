@@ -69,6 +69,7 @@ public class BaseDaoImpl<E extends BaseEntity> implements BaseDao<E> {
     }
   }
 
+  @Transactional
   public E find(Long id){
     return entityManager.find(entityClass, id);
   }
