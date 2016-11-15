@@ -14,6 +14,7 @@ public interface QuestionService {
     List<Question> getQuestionsByTestId(Long testId);
     Question getQuestionByQuestionId(Long questionId);
     void save(Question question);
-    void removeByQuestionId(Question question);
+    void removeByQuestion(Question question);
+    void removeByQuestionId(Long questionId);
     void removeAll(List<Question> questions);
 }

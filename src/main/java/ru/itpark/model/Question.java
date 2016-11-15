@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,6 +20,13 @@ public class Question extends BaseEntity {
   private String question;
   private Integer answerCount;
   private List<Answer> answers;
+
+  public Question() {
+  }
+
+  public Question(Test test) {
+    this.test = test;
+  }
 
   @ManyToOne(fetch = FetchType.LAZY)
   public Test getTest() {

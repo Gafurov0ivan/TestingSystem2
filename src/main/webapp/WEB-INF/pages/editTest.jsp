@@ -31,13 +31,11 @@
   </nav>
   <div>
     <c:set var="i" value="1"/>
-    <jsp:useBean id="test" scope="request" type="ru.itpark.model.Test"/>
     <c:forEach items="${test.questions}" var="question" >
-      <jsp:useBean id="qId" scope="request" type="java.lang.Long"/>
-      <a class = "btn btn-sm btn-upper ${(qId.toString().equals(i.toString())) ? 'btn-primary' : 'btn-info'}" href="/editTest?id=${test.id}&questionId=${i}">#${i}</a>
+      <a class = "btn btn-sm btn-upper ${(qId.toString().equals(question.id.toString())) ? 'btn-primary' : 'btn-info'}" href="/editTest?id=${test.id}&questionId=${question.id}">#${i}</a>
       <c:set var="i" value="${i+1}"/>
     </c:forEach>
-    <button class = "btn btn-success btn-sm btn-upper"><span class="glyphicon glyphicon-plus"></span></button>
+    <a class = "btn btn-success btn-sm btn-upper" href="/editTest?id=${test.id}&addQuestion=true"><span class="glyphicon glyphicon-plus"></span></a>
 
   </div>
 </div>
@@ -51,7 +49,7 @@
           <fieldset class="myclass">
             <div class="form-group">
               <label class="control-label" for="question">Текст вопроса</label>
-              <textarea class="form-control" id="questiontext" name="question" rows="2">${test.getQuestion(qId-1).question}</textarea>
+              <textarea class="form-control" id="questiontext" name="question" rows="2">${test.getQuestion(qId).question}</textarea>
             </div>
             <!-- Form Name -->
             <legend></legend>
@@ -77,7 +75,7 @@
 
 
               <c:set var="j" value="1"/>
-              <c:forEach items="${test.getQuestion(qId-1).answers}" var="answer">
+              <c:forEach items="${test.getQuestion(qId).answers}" var="answer">
               <div class="entry input-group form-group">
               <div class="input-group-addon">
                 <input type="checkbox" name="s[]" value="ch${j}" class="chkbx" <c:if test="${answer.isCorrect}">checked</c:if>/>
@@ -91,7 +89,7 @@
               </div>
                 <c:set var="j" value="${j+1}"/>
                 </c:forEach>
-            <c:if test="${test.getQuestion(qId-1).answers == null || test.getQuestion(qId-1).answers.size() == 0}">
+            <c:if test="${test.getQuestion(qId).answers == null || test.getQuestion(qId).answers.size() == 0}">
               <div class="entry input-group form-group">
                 <div class="input-group-addon"><input type="checkbox" name="s[]" value="ch1" class="chkbx"></div>
                 <input class="form-control forclone" name="field[0]" type="text" placeholder="Введите вариант ответа" id="field1" >
@@ -105,6 +103,7 @@
 
 
           </fieldset>
+          <input type="hidden" name="SAVE" value="" />
           <button type="submit" formmethod="post" id="submitForm" class="btn btn-primary" aria-label="">
             Сохранить
           </button>
@@ -136,7 +135,7 @@
       finded = newEntry.find('input');
       attrib = finded.attr('type');
       newEntry.find('input').val('');
-      newEntry.find('input').attr('name','filed[' + nm + ']');
+      newEntry.find('input').attr('name','field[' + nm + ']');
       controlForm.find('.entry:last .chkbx').val('ch' + nm);
       controlForm.find('.entry:last .chkbx').attr('name','s[]');
       controlForm.find('.entry:not(:last) .btn-add')
@@ -151,6 +150,12 @@
     });
   });
 
+</script>
+<script type="text/javascript">
+  $('#form').submit(function(eventObj) {
+    $(this).append('<input type="hidden" name="SAVE" value="" /> ');
+    return true;
+  });
 </script>
 </body>
 </html>

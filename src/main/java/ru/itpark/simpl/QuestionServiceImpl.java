@@ -44,8 +44,14 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void removeByQuestionId(Question question) {
+    public void removeByQuestion(Question question) {
         questionDao.remove(question);
+    }
+
+    @Override
+    @Transactional
+    public void removeByQuestionId(Long questionId) {
+        questionDao.remove(questionId);
     }
 
     @Override
