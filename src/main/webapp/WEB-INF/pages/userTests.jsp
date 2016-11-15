@@ -16,7 +16,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/">HOME</a></li>
-            <li class="active"><a href="/userTests">MY PROFILE</a></li>
+            <li class="active"><a href="#">MY PROFILE</a></li>
             <li><a href="/newTest">ADD TEST</a></li>
             <li><a href="/about">CONTACT</a></li>
         </ul>
@@ -74,7 +74,6 @@
                 .attr('name', 'delete')
                 .appendTo('#tabForm');
     });
-    //    $('form').append('<input type="hidden" id="yourData" name="yourData" value="'+ yourValue +'"/>');
 
     function selectAll(bx) {
         console.log(bx.checked);
@@ -85,7 +84,6 @@
             }
         }
     }
-
 
 </script>
 </body>

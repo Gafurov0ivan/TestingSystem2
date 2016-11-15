@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.TestDao;
 import ru.itpark.model.Test;
-import ru.itpark.model.UserTest;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -28,13 +27,6 @@ public class TestDaoImpl extends BaseDaoImpl implements TestDao {
     return (List<Test>)q.getResultList();
   }
 
-  @Transactional
-  public List<UserTest> getCompletedTestsByUser(String userName) {
-    Query q = getEntityManager().createQuery("SELECT ut FROM Test t, UserTest ut " +
-        "where ut.test.id = t.id and ut.user.userName=:userName");
-    q.setParameter("userName", userName);
-    return (List<UserTest>)q.getResultList();
-  }
 
   @Transactional
   public Long getCompletedTestsCount(Long id) {

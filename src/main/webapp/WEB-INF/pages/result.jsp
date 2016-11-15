@@ -6,7 +6,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
   <meta charset="UTF-8">
-  <title>Result</title>
+  <title>Результат теста ${testCaption}</title>
 </head>
 <body>
 
@@ -18,7 +18,7 @@
     <ul class="nav navbar-nav">
       <li><a href="/">HOME</a></li>
       <li><a href="/userTests">MY PROFILE</a></li>
-      <li><a href="/newTest">ADD TEST</a></li>
+      <li><a href="/editTest">ADD TEST</a></li>
       <li><a href="/about">CONTACT</a></li>
     </ul>
   </div>
@@ -30,16 +30,16 @@
     <div class="control-group" id="fields">
       <div class="controls">
         <form role="form" class="control">
-          <div class="form-group">
+          <div class="form-group" style="text-align: center">
             <label class="control-label">${testCaption}</label>
           </div>
           <legend></legend>
-          <div class="form-group">
+          <div class="form-group" style="text-align: center">
             <label class="control-label">Ваш результат ${testResult} из ${questionCount}
               (${testResultPercent} %)</label>
           </div>
           <form>
-            <div class="row">
+            <div style="text-align: center">
               <a href="completedTests" class="btn btn-primary">Перейти к пройденным тестам</a>
               <a href="showTest?id=${testId}" class="btn btn-primary">Посмотерть ответы</a>
             </div>

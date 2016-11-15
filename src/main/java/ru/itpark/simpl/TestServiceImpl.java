@@ -4,14 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.TestDao;
+import ru.itpark.dao.UserAnswerDao;
 import ru.itpark.dao.UserDao;
 import ru.itpark.dao.UserTestDao;
 import ru.itpark.model.Answer;
 import ru.itpark.model.Question;
 import ru.itpark.model.Test;
 import ru.itpark.model.User;
+import ru.itpark.model.UserAnswer;
 import ru.itpark.model.UserTest;
 import ru.itpark.service.TestService;
+import ru.itpark.service.UserTestService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,10 +36,10 @@ public class TestServiceImpl implements TestService {
   private TestDao testDao;
 
   @Autowired
-  private UserTestDao userTestDao;
+  private UserDao userDao;
 
   @Autowired
-  private UserDao userDao;
+  private UserTestService userTestService;
 
   public List<Test> getTests(String userName) {
     return testDao.getTestsByAuthor(userName);
@@ -44,11 +47,6 @@ public class TestServiceImpl implements TestService {
 
   public void save(Test test) {
     testDao.saveOrUpdate(test);
-  }
-
-  @Transactional
-  public List<UserTest> getCompletedTestsByUser(String userName) {
-    return testDao.getCompletedTestsByUser(userName);
   }
 
   @Transactional
@@ -78,10 +76,13 @@ public class TestServiceImpl implements TestService {
 
   public int checkTest(Map requestParam, Test test) {
     int count = 0;
+    Set<Long> correctQuestions = new HashSet<>();
+    Set<Long> allUserAnswers = new HashSet<>();
     if (test != null) {
-      Map<Long, Set<Long>> answerMap = getAnswerMap((List) test.getQuestions());
+      Map<Long, Set<Long>> answerMap = getAnswerMap(test.getQuestions());
+
       for (Object key : requestParam.keySet()) {
-        if (key.equals("testId") || key.equals("id")) {
+        if (key.equals("id")) {
           continue;
         }
         Long questionId = Long.parseLong((String) key);
@@ -90,16 +91,17 @@ public class TestServiceImpl implements TestService {
         for (String userAnswer : answers) {
           userAnswers.add(Long.parseLong(userAnswer));
         }
+        allUserAnswers.addAll(userAnswers);
         Set<Long> correctAnswers = answerMap.get(questionId);
         if (correctAnswers.equals(userAnswers)) {
           count++;
+          correctQuestions.add(questionId);
         }
       }
-      saveFinishedTestInfo(test, userDao.getUser("Kamila"), count);
+      userTestService.saveUserAnswers(test, userDao.getUser("Kamila"), correctQuestions, allUserAnswers);
     }
     return count;
   }
-
 
   private Map<Long, Set<Long>> getAnswerMap(List<Question> questions) {
     Map<Long, Set<Long>> result = new HashMap<>();
@@ -114,12 +116,4 @@ public class TestServiceImpl implements TestService {
         .map(Answer::getId).collect(Collectors.toSet());
   }
 
-  private void saveFinishedTestInfo(Test test, User user, int result) {
-    UserTest userTest = new UserTest();
-    userTest.setDate(new Date());
-    userTest.setResult(result);
-    userTest.setTest(test);
-    userTest.setUser(user);
-    userTestDao.saveOrUpdate(userTest);
-  }
 }

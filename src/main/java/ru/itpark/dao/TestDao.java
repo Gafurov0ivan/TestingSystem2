@@ -12,6 +12,6 @@ import java.util.List;
 public interface TestDao<E> extends BaseDao<E>{
 
   List<Test> getTestsByAuthor(String authorName);
-  List<UserTest> getCompletedTestsByUser(String userName);
+
   Long getCompletedTestsCount(Long id);
 }
