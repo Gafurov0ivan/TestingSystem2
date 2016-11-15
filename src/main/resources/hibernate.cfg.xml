@@ -6,6 +6,7 @@
     <session-factory>
         <mapping class="ru.itpark.model.User"/>
         <mapping class="ru.itpark.model.UserTest"/>
+        <mapping class="ru.itpark.model.UserAnswer"/>
         <mapping class="ru.itpark.model.Test"/>
         <mapping class="ru.itpark.model.Question"/>
         <mapping class="ru.itpark.model.Answer"/>

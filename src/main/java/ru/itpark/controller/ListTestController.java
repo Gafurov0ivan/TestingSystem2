@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.service.TestService;
+import ru.itpark.service.UserTestService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class ListTestController {
 
     @Autowired
     private TestService testService;
+    @Autowired
+    private UserTestService userTestService;
 
     @RequestMapping(value = "/userTests", method = RequestMethod.POST)
     public ModelAndView getPostUserTests(HttpServletRequest request) {
@@ -51,7 +54,7 @@ public class ListTestController {
     public ModelAndView getCompletedTests() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("completedTests");
-        modelAndView.addObject("tests", testService.getCompletedTestsByUser("Kamila"));
+        modelAndView.addObject("tests", userTestService.getCompletedTestsByUser("Kamila"));
         return modelAndView;
     }
 }

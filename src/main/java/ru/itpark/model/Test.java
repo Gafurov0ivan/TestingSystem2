@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Kamila Iskhakova
@@ -15,7 +16,7 @@ import java.util.Collection;
 @Entity
 public class Test extends BaseEntity {
 
-  private Collection<Question> questions;
+  private List<Question> questions;
   private User author;
   private String caption;
   private Integer questionCount;
@@ -29,7 +30,7 @@ public class Test extends BaseEntity {
 
   @OneToMany(mappedBy = "test", fetch = FetchType.LAZY,
           cascade = CascadeType.PERSIST, orphanRemoval = true)
-  public Collection<Question> getQuestions() {
+  public List<Question> getQuestions() {
     return questions;
   }
 
@@ -41,7 +42,7 @@ public class Test extends BaseEntity {
     return null;
   }
 
-  public void setQuestions(Collection<Question> questions) {
+  public void setQuestions(List<Question> questions) {
     this.questions = questions;
   }
 
