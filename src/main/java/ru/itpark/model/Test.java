@@ -34,8 +34,11 @@ public class Test extends BaseEntity {
   }
 
   public Question getQuestion(int id){
-    ArrayList<Question> qs = new ArrayList<>(questions);
-    return qs.get(id);
+    for (Question q: questions ) {
+        if(q.getId().intValue() == id)
+      return q;
+    }
+    return null;
   }
 
   public void setQuestions(Collection<Question> questions) {
@@ -60,7 +63,7 @@ public class Test extends BaseEntity {
   }
 
   public Integer getQuestionCount() {
-    return questionCount;
+    return questions.size();
   }
 
   public void setQuestionCount(Integer questionCount) {
