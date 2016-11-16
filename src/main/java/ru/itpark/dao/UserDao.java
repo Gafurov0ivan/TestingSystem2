@@ -16,4 +16,10 @@ public interface UserDao<E> extends BaseDao<E> {
   User getUser(String userName, String password);
 
   User getUser(String userName);
+
+
+  //  User findByUserName(String userName);
+  User save(String userName, String password);
+//  void deleteByUserName(String userName);
+//  List<User> findAllUsers();
 }
