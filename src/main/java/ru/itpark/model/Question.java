@@ -1,10 +1,6 @@
 package ru.itpark.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,11 +51,20 @@ public class Question extends BaseEntity {
 
   @OneToMany(mappedBy = "question", fetch = FetchType.LAZY,
           cascade = CascadeType.PERSIST, orphanRemoval = true)
+  @OrderBy("id")
   public List<Answer> getAnswers() {
     return answers;
   }
 
   public void setAnswers(List<Answer> answers) {
     this.answers = answers;
+  }
+
+  public void addAnswer(Answer answer){
+    answers.add(answer);
+  }
+
+  public void removeAllAnswers(){
+    answers.clear();
   }
 }

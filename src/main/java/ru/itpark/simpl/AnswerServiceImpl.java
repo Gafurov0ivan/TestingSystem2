@@ -60,7 +60,14 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     @Transactional
-    public void removeAll(List<Long> answerIds) {
+    public void removeAllByIds(List<Long> answerIds) {
         answerDao.removeAll(answerIds);
+    }
+
+    @Override
+    @Transactional
+    public void removeAllByAnswers(List<Answer> answers) {
+        for (Answer answer : answers)
+        answerDao.remove(answer);
     }
 }

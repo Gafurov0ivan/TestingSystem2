@@ -1,10 +1,6 @@
 package ru.itpark.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,16 +26,13 @@ public class Test extends BaseEntity {
 
   @OneToMany(mappedBy = "test", fetch = FetchType.LAZY,
           cascade = CascadeType.PERSIST, orphanRemoval = true)
+  @OrderBy("id")
   public List<Question> getQuestions() {
     return questions;
   }
 
   public Question getQuestion(int id){
-    for (Question q: questions ) {
-        if(q.getId().intValue() == id)
-      return q;
-    }
-    return null;
+    return questions.get(id);
   }
 
   public void setQuestions(List<Question> questions) {
@@ -69,5 +62,13 @@ public class Test extends BaseEntity {
 
   public void setQuestionCount(Integer questionCount) {
     this.questionCount = questionCount;
+  }
+
+  public void addQuestion(Question question){
+    questions.add(question);
+  }
+
+  public void removeQuestion(Question q){
+    questions.remove(q);
   }
 }

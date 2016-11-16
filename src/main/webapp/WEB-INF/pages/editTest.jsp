@@ -1,4 +1,4 @@
-
+<jsp:useBean id="test" scope="request" type="ru.itpark.model.Test"/>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -30,9 +30,9 @@
     </div>
   </nav>
   <div>
-    <c:set var="i" value="1"/>
+    <c:set var="i" value="0"/>
     <c:forEach items="${test.questions}" var="question" >
-      <a class = "btn btn-sm btn-upper ${(qId.toString().equals(question.id.toString())) ? 'btn-primary' : 'btn-info'}" href="/editTest?id=${test.id}&questionId=${question.id}">#${i}</a>
+      <a class = "btn btn-sm btn-upper ${(qId.toString().equals(i.toString())) ? 'btn-primary' : 'btn-info'}" href="/editTest?id=${test.id}&questionId=${i}">#${i}</a>
       <c:set var="i" value="${i+1}"/>
     </c:forEach>
     <a class = "btn btn-success btn-sm btn-upper" href="/editTest?id=${test.id}&addQuestion=true"><span class="glyphicon glyphicon-plus"></span></a>
@@ -49,7 +49,7 @@
           <fieldset class="myclass">
             <div class="form-group">
               <label class="control-label" for="question">Текст вопроса</label>
-              <textarea class="form-control" id="questiontext" name="question" rows="2">${test.getQuestion(qId).question}</textarea>
+              <textarea class="form-control" id="questiontext" name="question" rows="2">${test.getQuestion(qId.intValue()).question}</textarea>
             </div>
             <!-- Form Name -->
             <legend></legend>
@@ -59,13 +59,14 @@
               <div class=" required">
                 <div class="radio">
                   <label class="radio-custom" data-initialize="radio" id="radios-0">
-                    <input name="radios" type="radio" value="single"<c:if test="${test.questionCount == 1}">checked</c:if>/>
+                    <input name="radios" type="radio" value="single"
+                    <c:if test="${test.getQuestion(qId.intValue()).getAnswerCount() == 1}">checked</c:if>/>
                     <span class="radio-label">Один</span>
                   </label>
                 </div>
                 <div class="radio">
                   <label class="radio-custom" data-initialize="radio" id="radios-1">
-                    <input name="radios" type="radio" value="multiple" <c:if test="${test.questionCount == 2}">checked</c:if>>
+                    <input name="radios" type="radio" value="multiple" <c:if test="${test.getQuestion(qId.intValue()).getAnswerCount() == 2}">checked</c:if>/>
                     <span class="radio-label">Несколько</span>
                   </label>
                 </div>
@@ -82,8 +83,8 @@
               </div>
               <input class="form-control forclone" name="field[${j-1}]" type="text" placeholder="Введите вариант ответа" id="field${j}" value="${answer.text}">
               <span class="input-group-btn">
-                            <button class="btn ${j.toString().equals(test.getQuestion(qId-1).answers.size().toString()) ? 'btn-add btn-success ' : 'btn-remove btn-danger'}" type="button">
-                                <span class="${j.toString().equals(test.getQuestion(qId-1).answers.size().toString()) ? 'glyphicon glyphicon-plus' : 'glyphicon glyphicon-minus'}"></span>
+                            <button class="btn ${(j).toString().equals(test.getQuestion(qId).answers.size().toString()) ? 'btn-add btn-success ' : 'btn-remove btn-danger'}" type="button">
+                                <span class="${(j).toString().equals(test.getQuestion(qId).answers.size().toString()) ? 'glyphicon glyphicon-plus' : 'glyphicon glyphicon-minus'}"></span>
                             </button>
                             </span>
               </div>
@@ -106,6 +107,12 @@
           <input type="hidden" name="SAVE" value="" />
           <button type="submit" formmethod="post" id="submitForm" class="btn btn-primary" aria-label="">
             Сохранить
+          </button>
+        </form>
+        <form method="post" class="text-center">
+          <input type="hidden" name="REMOVE" value=""  />
+          <button type="${test.questions.size() == 1 ? 'hidden' : 'submit'}" formmethod="post" id="removeQuestionButton" class="btn btn-danger btn-upper" aria-label="" >
+            DELETE QUESTION
           </button>
         </form>
       </div>

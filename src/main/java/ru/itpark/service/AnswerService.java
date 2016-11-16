@@ -18,5 +18,6 @@ public interface AnswerService {
     void save(Answer answer);
     void removeByAnswerId(Long answerId);
     void removeByAnswer(Answer answer);
-    void removeAll(List<Long> answeriDs);
+    void removeAllByIds(List<Long> answeriDs);
+    void removeAllByAnswers(List<Answer> answers);
 }
