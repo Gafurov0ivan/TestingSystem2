@@ -57,9 +57,9 @@ public class UserTestServiceImpl implements UserTestService {
   }
 
   @Transactional
-  public UserTest getUserTest(Long testId){
+  public UserTest getUserTest(Long testId, String userName){
     // todo getCurrentUserName
-    return userTestDao.getCompletedTest(testId, "Kamila");
+    return userTestDao.getCompletedTest(testId, userName);
   }
 
   @Transactional
@@ -69,6 +69,11 @@ public class UserTestServiceImpl implements UserTestService {
 
   @Transactional
   public boolean isTestFinished(Long testId) {
-    return getUserTest(testId) != null;
+    return userTestDao.isTestFinished(testId);
+  }
+
+  @Transactional
+  public boolean isTestFinished(Long testId, String userName) {
+    return userTestDao.isTestFinished(testId, userName);
   }
 }

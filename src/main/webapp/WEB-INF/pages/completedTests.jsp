@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
-    <title>Completed tests</title>
+    <title>Пройденные тесты</title>
 </head>
 <body>
 
@@ -18,10 +18,10 @@
             <a class="navbar-brand" href="#">Ultimate Testing System</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="/">HOME</a></li>
-            <li class="active"><a href="#">MY PROFILE</a></li>
-            <li><a href="/editTest">ADD TEST</a></li>
-            <li><a href="/about">CONTACT</a></li>
+            <li><a href="/">ГЛАВНАЯ</a></li>
+            <li class="active"><a href="#">МОЙ ПРОФИЛЬ</a></li>
+            <li><a href="/editTest">СОЗДАТЬ ТЕСТ</a></li>
+            <li><a href="/about">КОНТАКТЫ</a></li>
         </ul>
     </div>
 </nav>
@@ -31,28 +31,34 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li><a href="userTests">MY TESTS</a></li>
-                <li class="active"><a href="completedTests">COMPLETED TESTS</a></li>
+                <li><a href="userTests">Мои тесты</a></li>
+                <li class="active"><a href="completedTests">Пройденные тесты</a></li>
             </ul>
         </div>
     </nav>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="font-size: 11pt">
         <thead>
         <tr>
-            <th>Test name</th>
-            <th>Date</th>
-            <th>Result</th>
-            <th>Result, %</th>
+            <th style="text-align: center" width="40px">№</th>
+            <th style="text-align: center">Тест</th>
+            <th style="text-align: center">Дата прохождения</th>
+            <th style="text-align: center">Результат</th>
+            <th style="text-align: center">Результат, %</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${tests}" var="test">
+        <c:forEach items="${tests}" var="test" varStatus="loop">
             <tr>
-                <td><c:out value="${test.test.caption}"/></td>
+                <td width="20px">${loop.index+1}</td>
+                <td>
+                  <a href="showTest?id=${test.test.id}">
+                    <c:out value="${test.test.caption}"/>
+                  </a>
+                </td>
                 <td><fmt:formatDate value="${test.date}" pattern="dd.MM.yyyy HH:mm"/></td>
-                <td><c:out value="${test.result} из ${test.test.questionCount}"/></td>
-                <td><c:out value="${test.resultPercent}"/></td>
+                <td style="text-align: center"><c:out value="${test.result} из ${test.test.questionCount}"/></td>
+                <td style="text-align: center"><c:out value="${test.resultPercent}"/></td>
             </tr>
         </c:forEach>
         </tbody>

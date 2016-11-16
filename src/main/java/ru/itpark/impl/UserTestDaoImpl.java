@@ -37,4 +37,21 @@ public class UserTestDaoImpl extends BaseDaoImpl implements UserTestDao {
     List<UserTest> userTests = (List<UserTest>)q.getResultList();
     return userTests.stream().findFirst().orElse(null);
   }
+
+  @Transactional
+  public boolean isTestFinished(Long testId){
+    Query q = getEntityManager().createQuery("SELECT count(ut.id) FROM UserTest ut " +
+        "where ut.test.id = :testId");
+    q.setParameter("testId", testId);
+    return  (Long)q.getSingleResult()>0;
+  }
+
+  @Override
+  public boolean isTestFinished(Long testId, String userName) {
+    Query q = getEntityManager().createQuery("SELECT count(ut.id) FROM UserTest ut " +
+        "where ut.test.id = :testId and ut.user.userName=:userName");
+    q.setParameter("testId", testId);
+    q.setParameter("userName", userName);
+    return  (Long)q.getSingleResult()>0;
+  }
 }

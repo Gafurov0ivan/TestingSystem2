@@ -16,10 +16,10 @@
       <a class="navbar-brand" href="#">Ultimate Testing System</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/">HOME</a></li>
-      <li><a href="/userTests">MY PROFILE</a></li>
-      <li><a href="/editTest">ADD TEST</a></li>
-      <li><a href="/about">CONTACT</a></li>
+      <li><a href="/">ГЛАВНАЯ</a></li>
+      <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
+      <li><a href="/editTest">СОЗДАТЬ ТЕСТ</a></li>
+      <li><a href="/about">КОНТАКТЫ</a></li>
     </ul>
   </div>
 </nav>
@@ -30,16 +30,19 @@
   <div class="row">
     <div class="control-group" id="fields">
       <div class="controls">
-        <form class="control">
-          <legend></legend>
+        <legend></legend>
 
-          <div class="form-group" style="text-align: center">
-            <label class="control-label">${test.caption}</label>
-          </div>
+        <div class="form-group" style="text-align: center">
+          <label class="control-label">${test.caption}</label>
+        </div>
+
+        <form class="control">
 
           <c:choose>
             <c:when test="${denied}">
-              <div class="text">Вы уже проходили данный тест. Повторное прохождение невозможно.</div>
+              <div class="text" style="text-align: center; color: #EF3B3A">
+                Вы уже проходили данный тест. Повторное прохождение невозможно.
+              </div>
               <br/>
               <br/>
 
@@ -68,7 +71,7 @@
               </c:forEach>
               <div style="text-align: center">
                 <button type="submit" formmethod="post" id="submitForm" class="btn btn-primary" aria-label="">
-                  Узнать результат
+                  Завершить тест
                 </button>
               </div>
 

@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.service.TestService;
 import ru.itpark.service.UserTestService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class ListTestController {
     private UserTestService userTestService;
 
     @RequestMapping(value = "/userTests", method = RequestMethod.POST)
-    public ModelAndView getPostUserTests(HttpServletRequest request) {
+    public ModelAndView getPostUserTests(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userTests");
         Map paramMap = request.getParameterMap();

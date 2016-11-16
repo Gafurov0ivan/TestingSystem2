@@ -17,10 +17,10 @@
       <a class="navbar-brand" href="#">Ultimate Testing System</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/">HOME</a></li>
-      <li><a href="/userTests">MY PROFILE</a></li>
-      <li><a href="/newTest">ADD TEST</a></li>
-      <li><a href="/about">CONTACT</a></li>
+      <li><a href="/">ГЛАВНАЯ</a></li>
+      <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
+      <li><a href="/editTest">СОЗДАТЬ ТЕСТ</a></li>
+      <li><a href="/about">КОНТАКТЫ</a></li>
     </ul>
   </div>
 </nav>
@@ -39,6 +39,10 @@
               <div class="form-group" style="text-align: center">
                 <input type="hidden" name="testId" value="${test.id}">
                 <label class="control-label">${test.caption}</label>
+                <br/>
+                <div class="text">
+                  Результат: ${fn:length(correctQuestionIds)} из ${fn:length(test.questions)}
+                </div>
               </div>
               <c:forEach items="${test.questions}" var="qu" varStatus="outterLoop">
                 <div class="text">${outterLoop.index+1}. ${qu.question}</div>
@@ -54,42 +58,20 @@
 
                 <c:forEach items="${qu.answers}" var="answer" varStatus="innerLoop">
                   <div class="row">
-
                     <c:choose>
                       <c:when test="${answer.isCorrect}">
                         <div style="color: #43A047">
-
-                          <c:choose>
-                            <c:when test="${fn:contains(userAnswers, answer.id)}">
-                              <input type="checkbox" checked="true" disabled="true"/>
-                            </c:when>
-                            <c:otherwise>
-                              <input type="checkbox" disabled="true"/>
-                            </c:otherwise>
-                          </c:choose>
-
+                          <input type="checkbox" disabled="true" <c:if test="${fn:contains(userAnswers, answer.id)}">checked</c:if>/>
                           <c:out value="${innerLoop.index+1}. ${answer.text}"/>
                         </div>
                       </c:when>
                       <c:otherwise>
-
                         <div>
-
-                          <c:choose>
-                            <c:when test="${fn:contains(userAnswers, answer.id)}">
-                              <input type="checkbox" checked="true" disabled="true"/>
-                            </c:when>
-                            <c:otherwise>
-                              <input type="checkbox" disabled="true"/>
-                            </c:otherwise>
-                          </c:choose>
-
+                          <input type="checkbox" disabled="true" <c:if test="${fn:contains(userAnswers, answer.id)}">checked</c:if>/>
                           <c:out value="${innerLoop.index+1}.  ${answer.text}"/>
                         </div>
                       </c:otherwise>
-
                     </c:choose>
-
                   </div>
                 </c:forEach>
                 <br/>
@@ -102,9 +84,9 @@
 
             <c:otherwise>
               <form>
-                <label class="control-label" style="color: #EF3B3A">
+                <div class="text" style="text-align: center; color: #EF3B3A">
                   Проверить результаты теста можно только после прохождения.
-                </label>
+                </div>
               </form>
               <form>
                 <div style="text-align: center">

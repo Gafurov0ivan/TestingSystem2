@@ -16,7 +16,8 @@ import java.util.Set;
 public interface UserTestService {
 
   void saveUserAnswers(Test test, User user, Set<Long> correctQuestions, Set<Long> userAnswers);
-  UserTest getUserTest(Long testId);
+  UserTest getUserTest(Long testId, String userName);
   List<UserTest> getCompletedTestsByUser(String userName);
   boolean isTestFinished(Long testId);
+  boolean isTestFinished(Long testId, String userName);
 }

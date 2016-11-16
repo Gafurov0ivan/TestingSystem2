@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.dao.QuestionDao;
 import ru.itpark.model.Question;
-import ru.itpark.model.Test;
 
 import javax.persistence.Query;
 import java.util.List;

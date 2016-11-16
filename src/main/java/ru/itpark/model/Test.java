@@ -1,8 +1,11 @@
 package ru.itpark.model;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.util.List;
 
 /**
@@ -15,7 +18,6 @@ public class Test extends BaseEntity {
   private List<Question> questions;
   private User author;
   private String caption;
-  private Integer questionCount;
 
   public Test(String caption) {
     this.caption = caption;
@@ -60,9 +62,7 @@ public class Test extends BaseEntity {
     return questions.size();
   }
 
-  public void setQuestionCount(Integer questionCount) {
-    this.questionCount = questionCount;
-  }
+  public void setQuestionCount(Integer questionCount) {}
 
   public void addQuestion(Question question){
     questions.add(question);

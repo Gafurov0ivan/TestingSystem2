@@ -1,7 +1,5 @@
 package ru.itpark.model;
 
-import javafx.beans.DefaultProperty;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
