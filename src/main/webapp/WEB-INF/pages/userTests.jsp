@@ -65,7 +65,10 @@
     </form>
     <div class="text" style="color: #EF3B3A">${delRes} </div>
     <div style="text-align: center">
-        <a href="editTest" class="btn btn-primary">Создать новый тест</a>
+        <form class="text-center" action="newTest">
+            <input type="hidden" name="ADDTEST" value="">
+            <input type="submit" formmethod="post" id="removeQuestionButton" class="btn btn-primary btn-upper" value="Создать новый тест"/>
+        </form>
     </div>
 </div>
 <div class="container col-md-2"></div>

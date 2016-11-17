@@ -3,15 +3,14 @@ package ru.itpark.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.model.Answer;
 import ru.itpark.model.Question;
 import ru.itpark.model.Test;
-import ru.itpark.service.AnswerService;
-import ru.itpark.service.QuestionService;
-import ru.itpark.service.TestService;
-import ru.itpark.service.UserTestService;
+import ru.itpark.model.User;
+import ru.itpark.service.*;
 
 import java.util.*;
 
@@ -29,10 +28,12 @@ public class EditTestController {
     @Autowired
     private AnswerService answerService;
     @Autowired
-    UserTestService userTestService;
+    private UserTestService userTestService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/editTest")
-    public ModelAndView newTest(WebRequest webRequest) {
+    public ModelAndView editTest(WebRequest webRequest) {
         String description = webRequest.getParameter("radios");
         Map<String, String[]> a = webRequest.getParameterMap();
         Long testId = null;
@@ -163,4 +164,36 @@ public class EditTestController {
             return modelAndView;
         }
     }
+
+    @RequestMapping(value = "/newTest", method = RequestMethod.POST)
+    public ModelAndView newTest(WebRequest webRequest){
+
+        Map<String,String[]> map = new TreeMap();
+        map.putAll(webRequest.getParameterMap());
+        if (map.containsKey("ADDTEST")){
+            Test test = new Test();
+            test.setCaption("new test");
+            test.setAuthor(userService.getUserById(1L));
+            testService.save(test);
+            map.remove("AddTest");
+            map.put("id",new String[]{test.getId().toString()});
+            return new ModelAndView("redirect:/editTest",map);
+        }
+        return new ModelAndView("errorpage");
+    }
+
+    @RequestMapping(value = "/editTest", method = RequestMethod.POST, params = {"saveTestCaption","id"})
+    public ModelAndView saveTestname(WebRequest webRequest){
+
+        Map<String,String[]> map = new TreeMap();
+        map.putAll(webRequest.getParameterMap());
+
+        Test test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
+        test.setCaption(map.get("saveTestCaption")[0]);
+        map.remove("saveTestCaption");
+        testService.save(test);
+
+        return new ModelAndView("redirect:/editTest",map);
+    }
+    
 }

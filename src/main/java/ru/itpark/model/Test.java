@@ -59,7 +59,7 @@ public class Test extends BaseEntity {
   }
 
   public Integer getQuestionCount() {
-    return questions.size();
+    return questions == null? 0 : questions.size();
   }
 
   public void setQuestionCount(Integer questionCount) {}

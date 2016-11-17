@@ -14,4 +14,6 @@ public interface UserService {
    * Поиск пользователя с логином и паролем
    */
   public boolean isUserValid(String userName, String password);
+
+  public User getUserById(Long id);
 }
