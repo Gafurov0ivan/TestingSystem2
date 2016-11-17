@@ -77,13 +77,6 @@ public class TestController {
     return modelAndView;
   }
 
-  @RequestMapping(value = "/result", method = RequestMethod.POST)
-  public ModelAndView getResult() {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("result");
-    return modelAndView;
-  }
-
   @RequestMapping(value = "/showTest", method = RequestMethod.GET)
   public ModelAndView showTestCorrectResults(WebRequest request) {
     // todo Отображать только если пользователь прошел тест

@@ -56,14 +56,6 @@ public class UserTest extends BaseEntity {
     this.result = result;
   }
 
-  @Transient
-  public Integer getResultPercent() {
-    return  (result * 100) / test.getQuestionCount();
-  }
-
-  public void setResultPercent(Integer resultPercent) {
-  }
-
   @OneToMany(mappedBy = "userTest", fetch = FetchType.LAZY,
       cascade = CascadeType.PERSIST, orphanRemoval = true)
   public List<UserAnswer> getUserAnswers() {

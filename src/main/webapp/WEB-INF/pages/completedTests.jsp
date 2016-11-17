@@ -57,8 +57,20 @@
                   </a>
                 </td>
                 <td><fmt:formatDate value="${test.date}" pattern="dd.MM.yyyy HH:mm"/></td>
-                <td style="text-align: center"><c:out value="${test.result} из ${test.test.questionCount}"/></td>
-                <td style="text-align: center"><c:out value="${test.resultPercent}"/></td>
+                <td style="text-align: center"><c:out value="${test.result} из ${fn:length(test.test.questions)}"/></td>
+                <td style="text-align: center">
+                    <c:choose>
+                        <c:when test="${fn:length(test.test.questions)==0}">
+                            <c:out value="0"/>
+                        </c:when>
+                        <c:otherwise>
+                            <fmt:parseNumber var="i" integerOnly="true"
+                                             type="number" value="${test.result*100/(fn:length(test.test.questions))}" />
+                            <c:out value="${i}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                </td>
             </tr>
         </c:forEach>
         </tbody>
