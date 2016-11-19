@@ -50,26 +50,16 @@
         <tbody>
         <c:forEach items="${tests}" var="test" varStatus="loop">
             <tr>
-                <td width="20px">${loop.index+1}</td>
+                <td style="text-align: center">${loop.index+1}</td>
                 <td>
-                  <a href="showTest?id=${test.test.id}">
-                    <c:out value="${test.test.caption}"/>
-                  </a>
+                    <a href="showTest?id=${test.test.id}">
+                        <c:out value="${test.test.caption}"/>
+                    </a>
                 </td>
                 <td><fmt:formatDate value="${test.date}" pattern="dd.MM.yyyy HH:mm"/></td>
-                <td style="text-align: center"><c:out value="${test.result} из ${fn:length(test.test.questions)}"/></td>
+                <td style="text-align: center"><c:out value="${test.result} из ${test.test.questions.size()}"/></td>
                 <td style="text-align: center">
-                    <c:choose>
-                        <c:when test="${fn:length(test.test.questions)==0}">
-                            <c:out value="0"/>
-                        </c:when>
-                        <c:otherwise>
-                            <fmt:parseNumber var="i" integerOnly="true"
-                                             type="number" value="${test.result*100/(fn:length(test.test.questions))}" />
-                            <c:out value="${i}"/>
-                        </c:otherwise>
-                    </c:choose>
-
+                    <c:out value="${test.getResultPercent()}"/>
                 </td>
             </tr>
         </c:forEach>

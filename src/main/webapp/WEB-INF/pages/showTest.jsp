@@ -41,14 +41,14 @@
                 <label class="control-label">${test.caption}</label>
                 <br/>
                 <div class="text">
-                  Результат: ${fn:length(correctQuestionIds)} из ${fn:length(test.questions)}
+                  Результат: ${correctQuestionIds.size()} из ${test.questions.size()}
                 </div>
               </div>
               <c:forEach items="${test.questions}" var="qu" varStatus="outterLoop">
                 <div class="text">${outterLoop.index+1}. ${qu.question}</div>
 
                 <c:choose>
-                  <c:when test="${fn:contains(correctQuestionIds, qu.id)}">
+                  <c:when test="${correctQuestionIds.contains(qu.id)}">
                     <div style="color: #43A047" class="text">Ответ правильный.</div>
                   </c:when>
                   <c:otherwise>
@@ -58,20 +58,10 @@
 
                 <c:forEach items="${qu.answers}" var="answer" varStatus="innerLoop">
                   <div class="row">
-                    <c:choose>
-                      <c:when test="${answer.isCorrect}">
-                        <div style="color: #43A047">
-                          <input type="checkbox" disabled="true" <c:if test="${fn:contains(userAnswers, answer.id)}">checked</c:if>/>
-                          <c:out value="${innerLoop.index+1}. ${answer.text}"/>
-                        </div>
-                      </c:when>
-                      <c:otherwise>
-                        <div>
-                          <input type="checkbox" disabled="true" <c:if test="${fn:contains(userAnswers, answer.id)}">checked</c:if>/>
-                          <c:out value="${innerLoop.index+1}.  ${answer.text}"/>
-                        </div>
-                      </c:otherwise>
-                    </c:choose>
+                    <div style="${answer.isCorrect ? 'color: #43A047' : ''} ">
+                      <input type="${(qu.answerCount==1) ? 'radio' : 'checkbox'}" disabled="true" <c:if test="${fn:contains(userAnswers, answer.id)}">checked</c:if>/>
+                      <c:out value="${innerLoop.index+1}. ${answer.text}"/>
+                    </div>
                   </div>
                 </c:forEach>
                 <br/>

@@ -65,4 +65,13 @@ public class UserTest extends BaseEntity {
   public void setUserAnswers(List<UserAnswer> userAnswers) {
     this.userAnswers = userAnswers;
   }
+
+  public Integer getResultPercent(){
+    int count = test.getQuestionCount();
+    return  count == 0 ? 0 : (result * 100) / count;
+  }
+
+  public void setResultPercent(Integer resultPercent){
+
+  }
 }

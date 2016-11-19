@@ -73,7 +73,7 @@
                 <br/> <br/>
                 <c:forEach items="${qu.answers}" var="answer" varStatus="innerLoop">
                   <div class="row">
-                    <input type="checkbox" name="${qu.id}" value="${answer.id}"/>
+                    <input type="${(qu.answerCount==1) ? 'radio' : 'checkbox'}" name="${qu.id}" value="${answer.id}"/>
                     <c:out value="${innerLoop.index+1}.  ${answer.text}"/>
                   </div>
                   <br/>

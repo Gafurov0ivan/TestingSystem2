@@ -39,8 +39,8 @@
         <table class="table table-bordered" style="font-size: 11pt">
             <thead>
             <tr>
-                <th width="10"><input type="checkbox" onclick="selectAll(this)"/></th>
-                <th>№</th>
+                <th width="10px"><input type="checkbox" onclick="selectAll(this)"/></th>
+                <th width="40px">№</th>
                 <th>Тест</th>
             </tr>
             </thead>
@@ -50,7 +50,7 @@
                     <td>
                         <input type="checkbox" name="id" value="${test.id}">
                     </td>
-                    <td>${loop.index+1}</td>
+                    <td style="text-align: center">${loop.index+1}</td>
                     <td>
                         <div>
                             <a href="editTest?id=${test.id}">

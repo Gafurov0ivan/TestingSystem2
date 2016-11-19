@@ -43,7 +43,7 @@ public class ListTestController {
     }
 
     @RequestMapping(value = "/userTests", method = RequestMethod.GET)
-    public ModelAndView getUserTests() {
+    public ModelAndView getUserTests(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userTests");
         modelAndView.addObject("tests", testService.getTests("Kamila"));
@@ -51,7 +51,7 @@ public class ListTestController {
     }
 
     @RequestMapping(value = "/completedTests", method = RequestMethod.GET)
-    public ModelAndView getCompletedTests() {
+    public ModelAndView getCompletedTests(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("completedTests");
         modelAndView.addObject("tests", userTestService.getCompletedTestsByUser("Kamila"));
