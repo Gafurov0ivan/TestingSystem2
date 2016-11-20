@@ -68,6 +68,11 @@ public class TestServiceImpl implements TestService {
     return (Test)testDao.find(id);
   }
 
+  @Transactional
+  public List<Test> getUnfinishedTests(String userName) {
+    return testDao.getUnfinishedTests(userName);
+  }
+
   public int checkTest(Map requestParam, Test test) {
     int count = 0;
     Set<Long> correctQuestions = new HashSet<>();

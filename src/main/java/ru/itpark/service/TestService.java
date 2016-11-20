@@ -17,4 +17,5 @@ public interface TestService {
   Test getTest(Long id);
   void save(Test test);
   int checkTest(Map map, Test test);
+  List<Test> getUnfinishedTests(String userName);
 }
