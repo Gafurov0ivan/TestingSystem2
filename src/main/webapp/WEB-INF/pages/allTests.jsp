@@ -28,43 +28,27 @@
 <div class="container col-md-3"></div>
 <div class="container col-md-6">
 
-    <%--<form id="filterPanel">--%>
-        <%--<div class="row">--%>
-            <%--Фильтр по наименованию:--%>
-            <%--<input id="captionFilter" name="captionFilter" >--%>
-        <%--</div>--%>
-        <%--<div class="row">--%>
-            <%--<button id="okBtn" type="submit" class="btn btn-default" value="ОК"/>--%>
-            <%--<button id="reBtn" type="submit" class="btn btn-default" value="Сбросить" onclick="resetFilter()"/>--%>
-        <%--</div>--%>
-    <%--</form>--%>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">Панель фильтрации</h1>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <input type="text" class="form-control" name="captionFilter" id="captionFilter"
+                       value="${captionFilter}" placeholder="Наименование">
+                <br/>
+                <button type="submit" id="applyFilter" class="btn btn-default">Найти</button>
+                <button type="button" id="findAll" class="btn btn-default">Сбросить</button>
+            </form>
+        </div>
+    </div>
 
-    <%--<form>--%>
-        <%--<div class="row">--%>
-            <%--<div class="col-xs-8 col-xs-offset-2">--%>
-                <%--<div class="input-group">--%>
-                    <%--<div class="input-group-btn search-panel">--%>
-                        <%--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">--%>
-                            <%--<span id="search_concept">Filter by</span> <span class="caret"></span>--%>
-                        <%--</button>--%>
-                        <%--<ul class="dropdown-menu" role="menu">--%>
-                            <%--<li><a href="#contains">Contains</a></li>--%>
-                            <%--<li><a href="#its_equal">It's equal</a></li>--%>
-                            <%--<li><a href="#greather_than">Greather than ></a></li>--%>
-                            <%--<li><a href="#less_than">Less than < </a></li>--%>
-                            <%--<li class="divider"></li>--%>
-                            <%--<li><a href="#all">Anything</a></li>--%>
-                        <%--</ul>--%>
-                    <%--</div>--%>
-                    <%--<input type="hidden" name="search_param" value="all" id="search_param">--%>
-                    <%--<input type="text" class="form-control" name="x" placeholder="Search term...">--%>
-                <%--<span class="input-group-btn">--%>
-                    <%--<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>--%>
-                <%--</span>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</form>--%>
+    <c:if test="${tests.isEmpty()}">
+        <div  style="color: #EF3B3A; text-align: center; font-size: 14pt">
+            Ни одна запись не найдена.
+        </div>
+    </c:if>
 
     <table class="table table-striped" style="font-size: 11pt">
         <thead/>
@@ -83,11 +67,24 @@
 </div>
 <div class="container col-md-3"></div>
 <script type="text/javascript">
-  function resetFilter() {
-      document.getElementById("captionFilter").removeAttribute("name");
-      document.getElementById("okBtn").click();
 
-  }
+    $(document).on('click', '.panel-heading span.clickable', function (e) {
+        var $this = $(this);
+        if (!$this.hasClass('panel-collapsed')) {
+            $this.parents('.panel').find('.panel-body').slideUp();
+            $this.addClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        } else {
+            $this.parents('.panel').find('.panel-body').slideDown();
+            $this.removeClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+        }
+    });
+
+    $('#findAll').on('click', function () {
+        $('#captionFilter').val('');
+        $('#applyFilter').click();
+    });
 
 </script>
 </body>

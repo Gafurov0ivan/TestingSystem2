@@ -20,7 +20,7 @@
         <ul class="nav navbar-nav">
             <li><a href="/">ГЛАВНАЯ</a></li>
             <li class="active"><a href="#">МОЙ ПРОФИЛЬ</a></li>
-            <li><a href="/editTest">СОЗДАТЬ ТЕСТ</a></li
+            <li><a href="/editTest">СОЗДАТЬ ТЕСТ</a></li>
             <li><a href="/allTests">ВСЕ ТЕСТЫ</a></li>
             <li><a href="/about">КОНТАКТЫ</a></li>
         </ul>

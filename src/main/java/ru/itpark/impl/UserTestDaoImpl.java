@@ -22,7 +22,7 @@ public class UserTestDaoImpl extends BaseDaoImpl implements UserTestDao {
   @Transactional
   public List<UserTest> getCompletedTestsByUser(String userName) {
     Query q = getEntityManager().createQuery("SELECT ut FROM UserTest ut " +
-        "where ut.user.userName=:userName");
+        "where ut.user.username=:userName");
     q.setParameter("userName", userName);
     return q.getResultList();
   }
@@ -30,7 +30,7 @@ public class UserTestDaoImpl extends BaseDaoImpl implements UserTestDao {
   @Transactional
   public UserTest getCompletedTest(Long testId, String userName) {
     Query q = getEntityManager().createQuery("SELECT ut FROM UserTest ut " +
-        "where ut.test.id = :testId and ut.user.userName=:userName");
+        "where ut.test.id = :testId and ut.user.username=:userName");
     q.setParameter("testId", testId);
     q.setParameter("userName", userName);
     q.setMaxResults(1);
@@ -49,7 +49,7 @@ public class UserTestDaoImpl extends BaseDaoImpl implements UserTestDao {
   @Override
   public boolean isTestFinished(Long testId, String userName) {
     Query q = getEntityManager().createQuery("SELECT count(ut.id) FROM UserTest ut " +
-        "where ut.test.id = :testId and ut.user.userName=:userName");
+        "where ut.test.id = :testId and ut.user.username=:userName");
     q.setParameter("testId", testId);
     q.setParameter("userName", userName);
     return  (Long)q.getSingleResult()>0;
