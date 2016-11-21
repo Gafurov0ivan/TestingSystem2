@@ -15,7 +15,9 @@ import java.io.IOException;
 public class CreateTestController {
     public static void main(String[] args) {
         ObjectMapper mapper = new ObjectMapper();
-        User user = new User(1L,"Marat");
+// after add User to system
+// User user = new User(1L, "Marat");
+        User user = new User();
         String s = "";
         try {
             s = mapper.writeValueAsString(user);
@@ -26,7 +28,7 @@ public class CreateTestController {
 
         try {
             User deserealizedUser = mapper.readValue(s,User.class);
-            System.out.println(deserealizedUser.getId() + deserealizedUser.getUserName() + deserealizedUser.getPassword());
+            System.out.println(deserealizedUser.getId() + deserealizedUser.getUsername() + deserealizedUser.getPassword());
         } catch (IOException e) {
             e.printStackTrace();
         }

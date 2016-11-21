@@ -173,7 +173,9 @@ public class EditTestController {
         if (map.containsKey("ADDTEST")){
             Test test = new Test();
             test.setCaption("new test");
-            test.setAuthor(userService.getUserById(1L));
+//after add User to system
+// test.setAuthor(userService.getUserById(1L));
+            test.setAuthor(userService.findByUsername(""));
             testService.save(test);
             map.remove("AddTest");
             map.put("id",new String[]{test.getId().toString()});
