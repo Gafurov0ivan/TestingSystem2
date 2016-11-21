@@ -1,34 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>User Login Page</title>
+  <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+  <form method="POST" action="${contextPath}/login" class="form-signin">
+    <div class="form-group ${error != null ? 'has-error' : ''}">
+      <span>${message}</span>
+      <input name="username" type="text" class="form-control" placeholder="Username" />
+      <input name="password" type="password" class="form-control" placeholder="Password"/>
+      <span>${error}</span>
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+      <button class="button" type="submit">Log In</button>
+      <p class="text-left"><a href="${contextPath}/registration" style="text-decoration: none;">Registration</a></p>
+    </div>
+  </form>
+</div>
+</body>
+</html>
+
+
 <%--<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <%--<!DOCTYPE html>--%>
 <%--<html >--%>
 <%--<head>--%>
-  <%--<meta charset="UTF-8">--%>
-  <%--<title>Login</title>--%>
+<%--<meta charset="UTF-8">--%>
+<%--<title>Login</title>--%>
 
-  <%--<link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">--%>
-  <%--<script src="<c:url value="/resources/js/login.js" />"></script>--%>
-  <%--<script src="<c:url value="/resources/js/jquery.1.10.2.min.js" />"></script>--%>
+<%--<link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">--%>
+<%--<script src="<c:url value="/resources/js/login.js" />"></script>--%>
+<%--<script src="<c:url value="/resources/js/jquery.1.10.2.min.js" />"></script>--%>
 
 
 <%--</head>--%>
 
 <%--<body>--%>
 <%--<div class="login-page">--%>
-  <%--<div class="form">--%>
-    <%--<form class="register-form">--%>
-      <%--<input type="text" placeholder="name"/>--%>
-      <%--<input type="password" placeholder="password"/>--%>
-      <%--<input type="text" placeholder="email address"/>--%>
-      <%--<button>register</button>--%>
-      <%--<p class="message"><a href="#">sign in</a></p>--%>
-    <%--</form>--%>
-    <%--<form class="login-form">--%>
-      <%--<input type="text" placeholder="username"/>--%>
-      <%--<input type="password" placeholder="password"/>--%>
-      <%--<button>login</button>--%>
-      <%--<p class="message"><a href="#">registration</a></p>--%>
-    <%--</form>--%>
-  <%--</div>--%>
+<%--<div class="form">--%>
+<%--<form class="register-form">--%>
+<%--<input type="text" placeholder="name"/>--%>
+<%--<input type="password" placeholder="password"/>--%>
+<%--<input type="text" placeholder="email address"/>--%>
+<%--<button>register</button>--%>
+<%--<p class="message"><a href="#">sign in</a></p>--%>
+<%--</form>--%>
+<%--<form class="login-form">--%>
+<%--<input type="text" placeholder="username"/>--%>
+<%--<input type="password" placeholder="password"/>--%>
+<%--<button>login</button>--%>
+<%--<p class="message"><a href="#">registration</a></p>--%>
+<%--</form>--%>
+<%--</div>--%>
 <%--</div>--%>
 <%--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>--%>
 
@@ -36,48 +68,3 @@
 
 <%--</body>--%>
 <%--</html>--%>
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<html >
-<head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-
-  <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
-  <script src="<c:url value="/resources/js/login.js" />"></script>
-  <script src="<c:url value="/resources/js/jquery.1.10.2.min.js" />"></script>
-
-</head>
-
-<body>
-
-<div class="login-page">
-  <div class="form">
-
-  </form>
-  <form:form method="POST" modelAttribute="command" action="addUser"  class="login-form">
-    <form:input type="text" placeholder="name" path="userName" />
-    <form:input type="password" placeholder="password" path="password" />
-    <button>login</button>
-    <p class="message"><a href="#">registration</a></p>
-  </form:form>
-    <form:form method="POST" modelAttribute="user" action="addUser" class="register-form">
-      <form:input type="text" placeholder="name" path="userName" />
-      <form:password type="password" placeholder="password" path="password" />
-      <form:input type="text" placeholder="email" path="email" />
-      <button input type="submit" value="Submit">register</button>
-      <p class="message" ><a href="#">sign in</a></p>
-
-    </form:form>
-  </div>
-</div>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-<script src="/resources/js/login.js"></script>
-
-</body>
-</html>
-

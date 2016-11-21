@@ -97,7 +97,10 @@ public class TestServiceImpl implements TestService {
           correctQuestions.add(questionId);
         }
       }
-      userTestService.saveUserAnswers(test, userDao.getUser("Kamila"), correctQuestions, allUserAnswers);
+// after add User to system
+// userTestService.saveUserAnswers(test, userDao.getUser("Kamila"), correctQuestions, allUserAnswers);
+
+      userTestService.saveUserAnswers(test, userDao.findByUsername("Kamila"), correctQuestions, allUserAnswers);
     }
     return count;
   }
