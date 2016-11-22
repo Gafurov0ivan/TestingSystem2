@@ -3,70 +3,57 @@ package ru.itpark.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import ru.itpark.dao.UserDao;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.itpark.model.User;
+import ru.itpark.service.AuthenticationService;
+import ru.itpark.service.UserService;
+import ru.itpark.validator.UserValidator;
 
 @Controller
-@RequestMapping("/")
 public class UserController {
 
     @Autowired
-    UserDao userDaoImpl;
+    private UserService userService;
 
-//    @RequestMapping(value = "/login", method = RequestMethod.GET)
-//    public String showAddUserForm(Model model){
-//        User user = new User();
-//        user.setUserName("Ivan");
-//        user.setPassword("Ivan");
-//        user.setEmail("Ivan");
-//        model.addAttribute("login", user);
-//        return "login";
-//    }
-//
-//    @RequestMapping(value = "/users", method = RequestMethod.POST)
-//    public String saveOrUpdateUser(@ModelAttribute("login") User user, BindingResult result, Model model){
-//        if (result.hasErrors()) {
-//            return "users/login";
-//        }
-//        userDaoImpl.save(user.getUserName(), user.getPassword());
-//        return "login";
-//    }
-//
-//}
+    @Autowired
+    private AuthenticationService authenticationService;
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public ModelAndView showForm() {
-        return new ModelAndView("login", "command", new User());
+    @Autowired
+    private UserValidator userValidator;
+
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String registration(Model model) {
+        model.addAttribute("userForm", new User());
+
+        return "registration";
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("command")User user,
-                         BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            return "errorpage";
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+        userValidator.validate(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
         }
-        model.addAttribute("userName", user.getUserName());
-        model.addAttribute("password", user.getPassword());
-        model.addAttribute("email", user.getEmail());
-        userDaoImpl.save(user.getUserName(), user.getPassword());
-        return "userTests";
+
+        userService.save(userForm);
+        authenticationService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+        return "/userTests";
     }
 
-//        if (result.hasErrors()) {
-//            return "registration";
-//        }
-//        if (userDaoImpl.findByUserName(user.getUserName())!=null)
-//        {
-//            FieldError ssoError = new FieldError("user", user.getUserName(), "This userName is already occupied");
-//            result.addError(ssoError);
-//            return "registration";
-//        }
-//        userDaoImpl.save(user.getUserName(), user.getPassword());
-////        model.addAttribute("success", "User " + user.getUserName() + " registered successfully");
-//        return "userTests";
-//    }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("error", "Your username and password is invalid.");
+
+        if (logout != null)
+            model.addAttribute("message", "You have been logged out successfully.");
+
+        return "login";
+    }
+
+
 }

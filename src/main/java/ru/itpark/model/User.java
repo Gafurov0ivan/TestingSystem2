@@ -1,55 +1,56 @@
 package ru.itpark.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 
-/**
- * @author Kamila Iskhakova
- *         Created on 07.11.2016
- */
 @Entity
-@Table(name = "sysUser")
-public class User extends BaseEntity {
+@Table(name = "person")
+public class User implements Serializable {
 
-  private String userName;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String username;
   private String password;
-  private String fullName;
   private String email;
+  @Transient
+  private String passwordConfirm;
+  @ManyToMany
+  @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+  private Set<Role> roles;
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   private Collection<UserTest> completedTests;
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
   private Collection<Test> createdTests;
 
-  public User() {
+  public Long getId() {
+    return id;
   }
 
-  public User(Long id, String userName) {
-    setId(id);
-
-    this.userName = userName;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public User(String userName, String password) {
-    this.password = password;
-    this.userName = userName;
+  public String getUsername() {return username;}
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public String getUserName() {
-    return userName;
+  public String getPassword() {return password;}
+
+  public void setPassword(String password) {this.password = password;}
+
+  public String getPasswordConfirm() {
+    return passwordConfirm;
   }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public void setPasswordConfirm(String passwordConfirm) {
+    this.passwordConfirm = passwordConfirm;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
   public String getEmail() {
     return email;
   }
@@ -58,15 +59,12 @@ public class User extends BaseEntity {
     this.email = email;
   }
 
-  public String getFullName() {
-    return fullName;
+  public Set<Role> getRoles() {
+    return roles;
   }
 
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
-  }
+  public void setRoles(Set<Role> roles) {this.roles = roles;}
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   public Collection<UserTest> getCompletedTests() {
     return completedTests;
   }
@@ -75,7 +73,7 @@ public class User extends BaseEntity {
     this.completedTests = completedTests;
   }
 
-  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+
   public Collection<Test> getCreatedTests() {
     return createdTests;
   }
@@ -83,6 +81,4 @@ public class User extends BaseEntity {
   public void setCreatedTests(Collection<Test> createdTests) {
     this.createdTests = createdTests;
   }
-
-
 }
