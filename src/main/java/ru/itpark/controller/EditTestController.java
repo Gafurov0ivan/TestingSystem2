@@ -11,6 +11,7 @@ import ru.itpark.model.Question;
 import ru.itpark.model.Test;
 import ru.itpark.model.User;
 import ru.itpark.service.*;
+import ru.itpark.util.RequestUtil;
 
 import java.util.*;
 
@@ -38,10 +39,21 @@ public class EditTestController {
     Question question;
     Integer qid;
 
-   @RequestMapping(value = "/editTest", params = {"id"})
+    @RequestMapping(value = "/editTest", params = {"id"})
     public ModelAndView editTestWithoutQuestionId(WebRequest webRequest) {
         Map<String, String[]> map = new TreeMap();
         map.putAll(webRequest.getParameterMap());
+        test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
+        if (!isTestAccessibleForUser(test)){
+            return new ModelAndView("errorpage");
+        }
+        if (test.getQuestions() == null || test.getQuestionCount() == 0) {
+            question = new Question();
+            question.setTest(test);
+            test.addQuestion(question);
+            question.setQuestion("");
+            questionService.save(question);
+        }
         map.put("questionId", new String[]{"0"});
         return new ModelAndView("redirect:/editTest", map);
     }
@@ -49,34 +61,39 @@ public class EditTestController {
     @RequestMapping(value = "/editTest", params = {"id", "questionId"})
     public ModelAndView editTest(WebRequest webRequest) {
         //Временно. Юзаем все запросы для юзера номер 1
-        user = userService.getUserById(1L);
+        //user = userService.findByUsername("user");
+
         test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
+        if (!isTestAccessibleForUser(test)){
+            return new ModelAndView("errorpage");
+        }
         qid = Integer.parseInt(webRequest.getParameter("questionId"));
         question = test.getQuestion(qid);
         if (qid < 0 || qid > test.getQuestionCount()) {
             return new ModelAndView("errorpage");
         }
-
-        if (userService.canEditTest(user, test)) {
-            modelAndView = new ModelAndView();
-            modelAndView.addObject("test", test);
-            if (webRequest.getParameterMap().containsKey("addQuestion")) {
-                Long end = new Long(test.getQuestionCount());
-                Question newQuestion = new Question(test);
-                test.addQuestion(newQuestion);
-                testService.save(test);
-                modelAndView.setViewName("editTest");
-                modelAndView.addObject("qId", end);
-                return modelAndView;
-            }
-            modelAndView.addObject("qId", new Long(qid));
+        modelAndView = new ModelAndView();
+        modelAndView.addObject("test", test);
+        if (webRequest.getParameterMap().containsKey("addQuestion")) {
+            Long end = new Long(test.getQuestionCount());
+            Question newQuestion = new Question(test);
+            test.addQuestion(newQuestion);
+            testService.save(test);
+            modelAndView.setViewName("editTest");
+            modelAndView.addObject("qId", end);
             return modelAndView;
         }
-        return new ModelAndView("errorpage");
+        modelAndView.addObject("qId", new Long(qid));
+        return modelAndView;
+        //return new ModelAndView("errorpage");
     }
 
     @RequestMapping(value = "/editTest", params = {"id", "questionId", "REMOVE"})
     public ModelAndView removeQuestion(WebRequest webRequest) {
+        test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
+        if (!isTestAccessibleForUser(test)){
+            return new ModelAndView("errorpage");
+        }
         modelAndView = editTest(webRequest);
         Map<String, String[]> map = new TreeMap();
         map.putAll(webRequest.getParameterMap());
@@ -98,15 +115,18 @@ public class EditTestController {
         return new ModelAndView("redirect:/editTest", map);
     }
 
-
     @RequestMapping(value = "/editTest", method = RequestMethod.POST, params = {"saveTestCaption", "id"})
     public ModelAndView saveTestname(WebRequest webRequest) {
-
+        test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
+        if (!isTestAccessibleForUser(test)){
+            return new ModelAndView("errorpage");
+        }
         Map<String, String[]> map = new TreeMap();
         map.putAll(webRequest.getParameterMap());
 
         Test test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
         test.setCaption(map.get("saveTestCaption")[0]);
+        test.setAuthor(userService.findByUsername(RequestUtil.getCurrentUserName()));
         map.remove("saveTestCaption");
         testService.save(test);
 
@@ -114,14 +134,14 @@ public class EditTestController {
     }
 
     @RequestMapping(value = "/editTest", params = {"id", "questionId", "SAVE"})
-    public ModelAndView saveQuestion(WebRequest webRequest){
+    public ModelAndView saveQuestion(WebRequest webRequest) {
+        if (!isTestAccessibleForUser(testService.getTest(Long.parseLong(webRequest.getParameter("id"))))){
+            return new ModelAndView("errorpage");
+        }
+
         Map<String, String[]> a = new TreeMap();
         a.putAll(webRequest.getParameterMap());
 
-        //такой метод не работает
-        //Question question = test.getQuestion(qid);
-
-        //а такой работает. надо разобраться почему
         Question question = testService.getTest(test.getId()).getQuestion(qid);
 
         question.setQuestion(a.get("question")[0]);
@@ -134,8 +154,8 @@ public class EditTestController {
         if (a.containsKey("s[]"))
             correctAnswersCheckboxes = Arrays.asList(a.get("s[]"));
 
-        List<Answer> answers= answerService.getAnswersByQuestionId(question.getId());
-        int i = 0;
+        List<Answer> answers = answerService.getAnswersByQuestionId(question.getId());
+        int i = 1;
         for (String key : a.keySet()) {
             if (key.matches("field\\[\\d\\d*\\]")) {
                 Answer answer = new Answer();
@@ -152,6 +172,30 @@ public class EditTestController {
         }
         questionService.save(question);
         a.remove("SAVE");
+        a.clear();
+        a.put("id", new String[]{webRequest.getParameter("id")});
+        a.put("questionId", new String[]{webRequest.getParameter("questionId")});
         return new ModelAndView("redirect:/editTest", a);
     }
+
+    @RequestMapping(value = "/newTest", method = RequestMethod.POST)
+    public ModelAndView newTest(WebRequest webRequest) {
+        Map<String, String[]> map = new TreeMap();
+        map.putAll(webRequest.getParameterMap());
+        if (map.containsKey("ADDTEST")) {
+            Test test = new Test();
+            test.setCaption("new test");
+            test.setAuthor(userService.findByUsername(RequestUtil.getCurrentUserName()));
+            testService.save(test);
+            map.remove("AddTest");
+            map.put("id", new String[]{test.getId().toString()});
+            return new ModelAndView("redirect:/editTest", map);
+        }
+        return new ModelAndView("errorpage");
+    }
+
+    private boolean isTestAccessibleForUser(Test test){
+        return test.getAuthor().getUsername().equals(RequestUtil.getCurrentUserName());
+    }
+
 }

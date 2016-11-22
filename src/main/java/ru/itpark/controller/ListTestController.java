@@ -45,7 +45,7 @@ public class ListTestController {
             }
             modelAndView.addObject("delRes", testService.removeAll(ids));
         }
-        modelAndView.addObject("tests", testService.getTests("Kamila"));
+        modelAndView.addObject("tests", testService.getTests(RequestUtil.getCurrentUserName()));
         return modelAndView;
     }
 
@@ -55,7 +55,7 @@ public class ListTestController {
         String userName = RequestUtil.getCurrentUserName();
         if (userName !=null) {
             modelAndView.setViewName("userTests");
-            modelAndView.addObject("tests", testService.getTests("Kamila"));
+            modelAndView.addObject("tests", testService.getTests(RequestUtil.getCurrentUserName()));
         } else {
             modelAndView.setViewName("login");
         }
@@ -79,7 +79,7 @@ public class ListTestController {
     public ModelAndView getAllTests(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("allTests");
-        List<Test> tests = testService.getUnfinishedTests("Kamila");
+        List<Test> tests = testService.getUnfinishedTests(RequestUtil.getCurrentUserName());
         String captionFilter = request.getParameter("captionFilter");
         if (captionFilter != null) {
             tests = tests.stream()
