@@ -18,6 +18,15 @@ public class Test extends BaseEntity {
   private List<Question> questions;
   private User author;
   private String caption;
+  private boolean visible;
+
+  public boolean isVisible() {
+    return visible;
+  }
+
+  public void setVisible(boolean visible) {
+    this.visible = visible;
+  }
 
   public Test(String caption) {
     this.caption = caption;

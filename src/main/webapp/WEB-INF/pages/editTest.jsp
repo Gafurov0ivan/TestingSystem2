@@ -22,11 +22,13 @@
                 <a class="navbar-brand" href="#">Ultimate Testing System</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="/">ГЛАВНАЯ</a></li>
+                <li><a href="/allTests">ГЛАВНАЯ</a></li>
                 <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
-                <li class="active"><a href="/editTest">СОЗДАТЬ ТЕСТ</a></li>
-                <li><a href="/allTests">ВСЕ ТЕСТЫ</a></li>
                 <li><a href="/about">КОНТАКТЫ</a></li>
+                <li></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/login?logout"><span class="glyphicon glyphicon-log-out"></span>ВЫХОД</a></li>
             </ul>
         </div>
     </nav>
@@ -55,8 +57,8 @@
     <div class="container col-md-10">
         <c:set var="i" value="0"/>
         <c:forEach items="${test.questions}" var="question">
-            <a class="btn btn-sm btn-upper ${(qId.toString().equals(i.toString())) ? 'btn-primary' : 'btn-info'}"
-               href="/editTest?id=${test.id}&questionId=${i}">#${i}</a>
+            <a class="btn btn-sm btn-upper ${(qId.toString().equals(i.toString())) ? 'btn-info' : 'btn-primary'}"
+               href="/editTest?id=${test.id}&questionId=${i}">${i+1}</a>
             <c:set var="i" value="${i+1}"/>
         </c:forEach>
         <a class="btn btn-success btn-sm btn-upper" href="/editTest?id=${test.id}&addQuestion=true"><span

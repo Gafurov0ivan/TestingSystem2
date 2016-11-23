@@ -34,7 +34,6 @@ public class EditTestController {
     private UserService userService;
 
     ModelAndView modelAndView;
-    User user;
     Test test;
     Question question;
     Integer qid;
@@ -60,9 +59,6 @@ public class EditTestController {
 
     @RequestMapping(value = "/editTest", params = {"id", "questionId"})
     public ModelAndView editTest(WebRequest webRequest) {
-        //Временно. Юзаем все запросы для юзера номер 1
-        //user = userService.findByUsername("user");
-
         test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
         if (!isTestAccessibleForUser(test)){
             return new ModelAndView("errorpage");
@@ -81,7 +77,10 @@ public class EditTestController {
             testService.save(test);
             modelAndView.setViewName("editTest");
             modelAndView.addObject("qId", end);
-            return modelAndView;
+            Map<String, String[]> map = new TreeMap();
+            map.put("id", new String[]{webRequest.getParameter("id")});
+            map.put("questionId", new String[]{String.valueOf(test.getQuestionCount()-1)});
+            return new ModelAndView("redirect:/editTest",map);
         }
         modelAndView.addObject("qId", new Long(qid));
         return modelAndView;
