@@ -20,10 +20,8 @@
       <a class="navbar-brand" href="#">Ultimate Testing System</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/">ГЛАВНАЯ</a></li>
+      <li><a href="/allTests">ГЛАВНАЯ</a></li>
       <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
-      <li><a href="/editTest">СОЗДАТЬ ТЕСТ</a></li>
-      <li><a href="/allTests">ВСЕ ТЕСТЫ</a></li>
       <li><a href="/about">КОНТАКТЫ</a></li>
     </ul>
   </div>

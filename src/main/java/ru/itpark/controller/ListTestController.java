@@ -1,15 +1,12 @@
 package ru.itpark.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itpark.model.Test;
-import ru.itpark.model.User;
 import ru.itpark.service.TestService;
 import ru.itpark.service.UserTestService;
 import ru.itpark.util.RequestUtil;

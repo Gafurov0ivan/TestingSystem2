@@ -11,6 +11,7 @@ import ru.itpark.model.UserAnswer;
 import ru.itpark.model.UserTest;
 import ru.itpark.service.TestService;
 import ru.itpark.service.UserTestService;
+import ru.itpark.util.RequestUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class TestController {
     if (testId != null) {
       Test test = testService.getTest(testId);
       if (test != null) {
-        modelAndView.addObject("denied", userTestService.isTestFinished(testId, "Kamila"));
+        modelAndView.addObject("denied", userTestService.isTestFinished(testId, RequestUtil.getCurrentUserName()));
         modelAndView.addObject("test", test);
         modelAndView.setViewName("test");
       } else {
@@ -57,7 +58,7 @@ public class TestController {
     ModelAndView modelAndView = new ModelAndView();
     Long id = getId(request.getParameter("id"));
     if (id != null ) {
-      boolean hasFinished = userTestService.isTestFinished(id, "Kamila");
+      boolean hasFinished = userTestService.isTestFinished(id, RequestUtil.getCurrentUserName());
       Test test = testService.getTest(id);
       if (!hasFinished) {
         Map paramMap = request.getParameterMap();
@@ -79,11 +80,10 @@ public class TestController {
 
   @RequestMapping(value = "/showTest", method = RequestMethod.GET)
   public ModelAndView showTestCorrectResults(WebRequest request) {
-    // todo Отображать только если пользователь прошел тест
     ModelAndView modelAndView = new ModelAndView();
     Long testId = getId(request.getParameter("id"));
     if (testId != null) {
-      UserTest userTest = userTestService.getUserTest(testId, "Kamila");
+      UserTest userTest = userTestService.getUserTest(testId, RequestUtil.getCurrentUserName());
       if (userTest != null) {
         Test test = userTest.getTest();
         List<Long> userAnswers = userTest.getUserAnswers().stream().map(ua -> ua.getUserAnswer().getId())
