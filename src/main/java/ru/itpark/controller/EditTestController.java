@@ -185,8 +185,9 @@ public class EditTestController {
             Test test = new Test();
             test.setCaption("new test");
             test.setAuthor(userService.findByUsername(RequestUtil.getCurrentUserName()));
+            test.setVisible(true);
             testService.save(test);
-            map.remove("AddTest");
+            map.remove("ADDTEST");
             map.put("id", new String[]{test.getId().toString()});
             return new ModelAndView("redirect:/editTest", map);
         }
