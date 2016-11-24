@@ -10,6 +10,7 @@ import ru.itpark.model.Question;
 import ru.itpark.model.Test;
 import ru.itpark.service.TestService;
 import ru.itpark.service.UserTestService;
+import ru.itpark.util.RequestUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,10 +98,7 @@ public class TestServiceImpl implements TestService {
           correctQuestions.add(questionId);
         }
       }
-// after add User to system
-// userTestService.saveUserAnswers(test, userDao.getUser("Kamila"), correctQuestions, allUserAnswers);
-
-      userTestService.saveUserAnswers(test, userDao.findByUsername("Kamila"), correctQuestions, allUserAnswers);
+      userTestService.saveUserAnswers(test, userDao.findByUsername(RequestUtil.getCurrentUserName()), correctQuestions, allUserAnswers);
     }
     return count;
   }
