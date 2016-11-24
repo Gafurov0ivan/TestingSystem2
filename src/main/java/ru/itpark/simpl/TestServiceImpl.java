@@ -45,23 +45,14 @@ public class TestServiceImpl implements TestService {
   }
 
   @Transactional
-  public String removeAll(List<Long> ids) {
-    StringBuilder stringBuilder = new StringBuilder();
-    List<Long> notDeletedIds = new ArrayList<>();
-    int count = 0;
+  public void refresh(List<Long> ids, boolean show) {
     for (Long id : ids) {
-      if (testDao.getCompletedTestsCount(id) == 0L) {
-        testDao.remove(id);
-        count++;
-      } else {
-        notDeletedIds.add(id);
+     Test test = (Test)testDao.find(id);
+      if (test.isVisible() != show) {
+        test.setVisible(show);
+        testDao.saveOrUpdate(test);
       }
     }
-    stringBuilder.append(count).append(" test(s) deleted.\n");
-    notDeletedIds.stream().forEach(id -> {
-      stringBuilder.append("Test id = ").append(id).append(" can't be deleted! Some users already have completed it.\n");
-    });
-    return stringBuilder.toString();
   }
 
   @Transactional

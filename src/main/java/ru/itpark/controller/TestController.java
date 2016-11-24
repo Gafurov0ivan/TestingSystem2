@@ -41,9 +41,13 @@ public class TestController {
     if (testId != null) {
       Test test = testService.getTest(testId);
       if (test != null) {
-        modelAndView.addObject("denied", userTestService.isTestFinished(testId, RequestUtil.getCurrentUserName()));
-        modelAndView.addObject("test", test);
-        modelAndView.setViewName("test");
+        if (!test.isVisible()) {
+          modelAndView.addObject("testNotAvailable", true);
+        } else {
+          modelAndView.addObject("denied", userTestService.isTestFinished(testId, RequestUtil.getCurrentUserName()));
+          modelAndView.addObject("test", test);
+          modelAndView.setViewName("test");
+        }
       } else {
         modelAndView.setViewName("errorpage");
       }

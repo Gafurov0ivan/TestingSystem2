@@ -13,7 +13,7 @@ import java.util.Map;
 public interface TestService {
 
   List<Test> getTests(String userName);
-  String removeAll(List<Long> ids);
+  void refresh(List<Long> ids, boolean show);
   Test getTest(Long id);
   void save(Test test);
   int checkTest(Map map, Test test);

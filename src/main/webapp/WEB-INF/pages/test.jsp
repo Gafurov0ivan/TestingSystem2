@@ -46,13 +46,24 @@
       <div class="form-group" style="text-align: center">
         <label class="control-label">${test.caption}</label>
       </div>
+
+      <c:choose>
+      <c:when test="${testNotAvailable}">
+        <div class="text" style="text-align: center; color: #EF3B3A; font-size: large">
+          На данный момент тест недоступен для прохождения по решению автора.
+        </div>
+          <br/><br/>
+        <div style="text-align: center">
+          <a href="allTests" class="btn btn-primary">Просмотреть доступные тесты</a>
+        </div>
+      </c:when>
+      <c:otherwise>
       <c:choose>
         <c:when test="${denied}">
           <div class="text" style="text-align: center; color: #EF3B3A">
             Вы уже проходили данный тест. Повторное прохождение невозможно.
           </div>
           <br/><br/>
-
           <div style="text-align: center">
             <a href="showTest?id=${test.id}" class="btn btn-primary">Посмотерть результат</a>
             <a href="completedTests" class="btn btn-primary">Перейти к пройденным тестам</a>
@@ -96,7 +107,8 @@
             </div>
           </form>
         </c:otherwise>
-
+        </c:choose>
+      </c:otherwise>
       </c:choose>
     </div>
   </div>

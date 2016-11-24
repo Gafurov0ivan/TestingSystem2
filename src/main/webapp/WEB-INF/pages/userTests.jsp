@@ -31,16 +31,18 @@
             </ul>
         </div>
     </nav>
-    <form id="tabForm" action="#" method="post">
+    <form id="tabForm" action="userTests">
         <div class="btn-group" role="group">
-            <button id="subButton" type="submit" class="btn btn-default">Delete</button>
+            <button id="subButton" type="submit" formmethod="post" class="btn btn-default">Скрыть</button>
+            <button id="showButton" type="submit" formmethod="post" class="btn btn-default">Опубликовать</button>
         </div>
         <table class="table table-bordered" style="font-size: 11pt">
             <thead>
             <tr>
                 <th width="10px"><input type="checkbox" onclick="selectAll(this)"/></th>
-                <th width="40px">№</th>
-                <th>Тест</th>
+                <th style="text-align: center" width="40px">№</th>
+                <th style="text-align: center">Тест</th>
+                <th style="text-align: center" width="80px">Доступен</th>
             </tr>
             </thead>
             <tbody>
@@ -57,12 +59,22 @@
                             </a>
                         </div>
                     </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${test.visible}">
+                                <div style="text-align: center" class="text">Да</div>
+                            </c:when>
+                            <c:otherwise>
+                                <div style="text-align: center" class="text">Нет</div>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </form>
-    <div class="text" style="color: #EF3B3A">${delRes} </div>
+
     <div style="text-align: center">
         <form class="text-center" action="newTest">
             <input type="hidden" name="ADDTEST" value="">
@@ -75,7 +87,13 @@
 
     $('#subButton').click(function () {
         $('<input />').attr('type', 'hidden')
-                .attr('name', 'delete')
+                .attr('name', 'makeInvisible')
+                .appendTo('#tabForm');
+    });
+
+    $('#showButton').click(function () {
+        $('<input />').attr('type', 'hidden')
+                .attr('name', 'makeVisible')
                 .appendTo('#tabForm');
     });
 

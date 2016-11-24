@@ -34,13 +34,17 @@ public class ListTestController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userTests");
         Map paramMap = request.getParameterMap();
-        if (paramMap.containsKey("delete") && paramMap.containsKey("id")) {
+        if ( paramMap.containsKey("id")) {
             String[] srtIds = (String[]) request.getParameterMap().get("id");
             List<Long> ids = new ArrayList<>(srtIds.length);
             for (String strId : srtIds) {
                 ids.add(Long.parseLong(strId));
             }
-            modelAndView.addObject("delRes", testService.removeAll(ids));
+            if (paramMap.containsKey("makeVisible")) {
+                testService.refresh(ids, true);
+            } else if (paramMap.containsKey("makeInvisible")) {
+                testService.refresh(ids, false);
+            }
         }
         modelAndView.addObject("tests", testService.getTests(RequestUtil.getCurrentUserName()));
         return modelAndView;
@@ -53,8 +57,6 @@ public class ListTestController {
         if (userName !=null) {
             modelAndView.setViewName("userTests");
             modelAndView.addObject("tests", testService.getTests(RequestUtil.getCurrentUserName()));
-        } else {
-            modelAndView.setViewName("login");
         }
         return modelAndView;
     }
@@ -66,8 +68,6 @@ public class ListTestController {
         if (userName != null) {
             modelAndView.setViewName("completedTests");
             modelAndView.addObject("tests", userTestService.getCompletedTestsByUser(userName));
-        } else {
-            modelAndView.setViewName("login");
         }
         return modelAndView;
     }

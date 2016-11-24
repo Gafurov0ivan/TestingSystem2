@@ -23,7 +23,7 @@ public class TestDaoImpl extends BaseDaoImpl implements TestDao {
   @Override
   public List<Test> getTestsByAuthor(String authorName) {
     Query q = getEntityManager().createQuery("SELECT t FROM Test t " +
-        "where t.author.username=:authorName");
+        "where t.author.username=:authorName order by t.caption");
     q.setParameter("authorName", authorName);
     return (List<Test>)q.getResultList();
   }
@@ -41,7 +41,8 @@ public class TestDaoImpl extends BaseDaoImpl implements TestDao {
   public List<Test> getUnfinishedTests(String userName) {
     Query q = getEntityManager().createQuery("select t from Test t " +
             "where not exists (select ut from UserTest ut " +
-            "where ut.test = t and ut.user.username = :userName) ");
+            "where ut.test = t and ut.user.username = :userName) " +
+            "and t.visible = true");
     q.setParameter("userName", userName);
     return (List<Test>)q.getResultList();
   }
