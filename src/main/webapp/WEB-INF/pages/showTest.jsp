@@ -10,7 +10,8 @@
   <title>Ответы на тест ${test.caption}</title>
 </head>
 <body>
-
+<div class="container col-md-1"></div>
+<div class="container col-md-10">
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -19,10 +20,14 @@
     <ul class="nav navbar-nav">
       <li><a href="/allTests">ГЛАВНАЯ</a></li>
       <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
-      <li><a href="/about">КОНТАКТЫ</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>ВЫХОД</a></li>
     </ul>
   </div>
 </nav>
+</div>
+<div class="container col-md-1"></div>
 
 <div class="container col-md-4"></div>
 <div class="container col-md-4">

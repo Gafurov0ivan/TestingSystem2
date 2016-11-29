@@ -11,8 +11,11 @@
         <intercept-url pattern="/" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/userTests" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/editTest" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/test" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/result" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/showTest" access="hasRole('ROLE_USER')"/>
         <form-login login-page="/login" default-target-url="/userTests" authentication-failure-url="/login?error" username-parameter="username" password-parameter="password"/>
-        <logout logout-success-url="/login?logout" />
+        <logout logout-url="/logout" logout-success-url="/login?logout" />
         <csrf disabled="true"/>
     </http>
     <authentication-manager alias="authenticationManager">

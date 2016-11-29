@@ -24,11 +24,10 @@
             <ul class="nav navbar-nav">
                 <li><a href="/allTests">ГЛАВНАЯ</a></li>
                 <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
-                <li><a href="/about">КОНТАКТЫ</a></li>
                 <li></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login?logout"><span class="glyphicon glyphicon-log-out"></span>ВЫХОД</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>ВЫХОД</a></li>
             </ul>
         </div>
     </nav>

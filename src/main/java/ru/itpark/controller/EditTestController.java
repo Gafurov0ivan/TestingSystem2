@@ -43,7 +43,7 @@ public class EditTestController {
         Map<String, String[]> map = new TreeMap();
         map.putAll(webRequest.getParameterMap());
         test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
-        if (!isTestAccessibleForUser(test)){
+        if (!isTestAccessibleForUser(test)) {
             return new ModelAndView("errorpage");
         }
         if (test.getQuestions() == null || test.getQuestionCount() == 0) {
@@ -60,7 +60,7 @@ public class EditTestController {
     @RequestMapping(value = "/editTest", params = {"id", "questionId"})
     public ModelAndView editTest(WebRequest webRequest) {
         test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
-        if (!isTestAccessibleForUser(test)){
+        if (!isTestAccessibleForUser(test)) {
             return new ModelAndView("errorpage");
         }
         qid = Integer.parseInt(webRequest.getParameter("questionId"));
@@ -79,8 +79,8 @@ public class EditTestController {
             modelAndView.addObject("qId", end);
             Map<String, String[]> map = new TreeMap();
             map.put("id", new String[]{webRequest.getParameter("id")});
-            map.put("questionId", new String[]{String.valueOf(test.getQuestionCount()-1)});
-            return new ModelAndView("redirect:/editTest",map);
+            map.put("questionId", new String[]{String.valueOf(test.getQuestionCount() - 1)});
+            return new ModelAndView("redirect:/editTest", map);
         }
         modelAndView.addObject("qId", new Long(qid));
         return modelAndView;
@@ -90,7 +90,7 @@ public class EditTestController {
     @RequestMapping(value = "/editTest", params = {"id", "questionId", "REMOVE"})
     public ModelAndView removeQuestion(WebRequest webRequest) {
         test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
-        if (!isTestAccessibleForUser(test)){
+        if (!isTestAccessibleForUser(test)) {
             return new ModelAndView("errorpage");
         }
         modelAndView = editTest(webRequest);
@@ -117,7 +117,7 @@ public class EditTestController {
     @RequestMapping(value = "/editTest", method = RequestMethod.POST, params = {"saveTestCaption", "id"})
     public ModelAndView saveTestname(WebRequest webRequest) {
         test = testService.getTest(Long.parseLong(webRequest.getParameter("id")));
-        if (!isTestAccessibleForUser(test)){
+        if (!isTestAccessibleForUser(test)) {
             return new ModelAndView("errorpage");
         }
         Map<String, String[]> map = new TreeMap();
@@ -134,7 +134,7 @@ public class EditTestController {
 
     @RequestMapping(value = "/editTest", params = {"id", "questionId", "SAVE"})
     public ModelAndView saveQuestion(WebRequest webRequest) {
-        if (!isTestAccessibleForUser(testService.getTest(Long.parseLong(webRequest.getParameter("id"))))){
+        if (!isTestAccessibleForUser(testService.getTest(Long.parseLong(webRequest.getParameter("id"))))) {
             return new ModelAndView("errorpage");
         }
 
@@ -194,8 +194,8 @@ public class EditTestController {
         return new ModelAndView("errorpage");
     }
 
-    private boolean isTestAccessibleForUser(Test test){
-        return test.getAuthor().getUsername().equals(RequestUtil.getCurrentUserName());
+    private boolean isTestAccessibleForUser(Test test) {
+        return (test == null) ? false : test.getAuthor().getUsername().equals(RequestUtil.getCurrentUserName());
     }
 
 }

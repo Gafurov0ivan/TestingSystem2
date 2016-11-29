@@ -11,19 +11,24 @@
     <title>Пройденные тесты</title>
 </head>
 <body>
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Ultimate Testing System</a>
+<div class="container col-md-1"></div>
+<div class="container col-md-10">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Ultimate Testing System</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/allTests">ГЛАВНАЯ</a></li>
+                <li class="active"><a href="#">МОЙ ПРОФИЛЬ</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>ВЫХОД</a></li>
+            </ul>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a href="/allTests">ГЛАВНАЯ</a></li>
-            <li class="active"><a href="#">МОЙ ПРОФИЛЬ</a></li>
-            <li><a href="/about">КОНТАКТЫ</a></li>
-        </ul>
-    </div>
-</nav>
+    </nav>
+</div>
+<div class="container col-md-1"></div>
 
 <div class="container col-md-2"></div>
 <div class="container col-md-8">
