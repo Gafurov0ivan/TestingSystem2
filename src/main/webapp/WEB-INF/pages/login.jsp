@@ -8,7 +8,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>User Login Page</title>
+  <title>Войти</title>
   <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
 </head>
 
@@ -21,8 +21,8 @@
       <input name="password" type="password" class="form-control" placeholder="Password"/>
       <span>${error}</span>
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-      <button class="button" type="submit">Log In</button>
-      <p class="text-left"><a href="${contextPath}/registration" style="text-decoration: none;">Registration</a></p>
+      <button class="button" type="submit">Войти</button>
+      <p class="text-left"><a href="${contextPath}/registration" style="text-decoration: none;">Регистрация</a></p>
     </div>
   </form>
 </div>
