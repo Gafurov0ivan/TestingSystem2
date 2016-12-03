@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static ru.itpark.util.RequestUtil.getId;
+
 /**
  * Created by Kami on 14.11.2016.
  * Отрисовка списков тестов
@@ -29,8 +31,9 @@ public class ListTestController {
     @Autowired
     private UserTestService userTestService;
 
-    @RequestMapping(value = "/userTests", method = RequestMethod.POST)
-    public ModelAndView getPostUserTests(WebRequest request) {
+
+    @RequestMapping(value = "/userTests2", method = RequestMethod.POST)
+    public ModelAndView getPostUserTests2(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userTests");
         Map paramMap = request.getParameterMap();
@@ -50,14 +53,27 @@ public class ListTestController {
         return modelAndView;
     }
 
+
+    @RequestMapping(value = "/userTests", method = RequestMethod.POST)
+    public ModelAndView getPostUserTests(WebRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("userTests");
+        modelAndView.addObject("userName", RequestUtil.getCurrentUserName());
+        Long id = getId(request.getParameter("id"));
+        if (id != null) {
+            testService.refresh(id);
+        }
+        modelAndView.addObject("tests", testService.getTests(RequestUtil.getCurrentUserName()));
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/", "/userTests"}, method = RequestMethod.GET)
     public ModelAndView getUserTests(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         String userName = RequestUtil.getCurrentUserName();
-        if (userName !=null) {
-            modelAndView.setViewName("userTests");
-            modelAndView.addObject("tests", testService.getTests(RequestUtil.getCurrentUserName()));
-        }
+        modelAndView.setViewName("userTests");
+        modelAndView.addObject("tests", testService.getTests(RequestUtil.getCurrentUserName()));
+        modelAndView.addObject("userName", userName);
         return modelAndView;
     }
 
@@ -65,10 +81,9 @@ public class ListTestController {
     public ModelAndView getCompletedTests(HttpServletRequest request) {
         String userName = RequestUtil.getCurrentUserName();
         ModelAndView modelAndView = new ModelAndView();
-        if (userName != null) {
-            modelAndView.setViewName("completedTests");
-            modelAndView.addObject("tests", userTestService.getCompletedTestsByUser(userName));
-        }
+        modelAndView.setViewName("completedTests");
+        modelAndView.addObject("tests", userTestService.getCompletedTestsByUser(userName));
+        modelAndView.addObject("userName", RequestUtil.getCurrentUserName());
         return modelAndView;
     }
 
@@ -85,6 +100,7 @@ public class ListTestController {
 
             modelAndView.addObject("captionFilter", captionFilter);
         }
+        modelAndView.addObject("userName", RequestUtil.getCurrentUserName());
         modelAndView.addObject("tests", tests);
         return modelAndView;
     }

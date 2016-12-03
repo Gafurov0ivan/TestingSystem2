@@ -41,15 +41,15 @@
   cursor: pointer;
 }
 .button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: #26a69a;
 }
 .text-left {
   margin: 15px 0 0;
-  color: #76b852;
+  color: #26a69a;
   font-size: 18px;
 }
 .form .message a {
-  color: #76b852;
+  color: #26a69a;
   text-decoration: none;
 }
 .form .register-form {
@@ -90,10 +90,10 @@
 }
 body {
   background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
+  background: -webkit-linear-gradient(right, #26a69a, #4db6ac);
+  background: -moz-linear-gradient(right, #26a69a, #4db6ac);
+  background: -o-linear-gradient(right, #26a69a, #4db6ac);
+  background: linear-gradient(to left, #26a69a, #4db6ac);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

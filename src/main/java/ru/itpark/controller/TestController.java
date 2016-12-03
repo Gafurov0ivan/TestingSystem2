@@ -54,6 +54,7 @@ public class TestController {
     } else {
       modelAndView.setViewName("errorpage");
     }
+    modelAndView.addObject("userName", RequestUtil.getCurrentUserName());
     return modelAndView;
   }
 
@@ -78,6 +79,7 @@ public class TestController {
         modelAndView.addObject("testCaption", test.getCaption());
       }
     }
+    modelAndView.addObject("userName", RequestUtil.getCurrentUserName());
     modelAndView.setViewName("result");
     return modelAndView;
   }
@@ -105,6 +107,7 @@ public class TestController {
     } else {
       modelAndView.setViewName("errorpage");
     }
+    modelAndView.addObject("userName", RequestUtil.getCurrentUserName());
     return modelAndView;
   }
 }

@@ -56,6 +56,13 @@ public class TestServiceImpl implements TestService {
   }
 
   @Transactional
+  public void refresh(Long id) {
+     Test test = (Test)testDao.find(id);
+     test.setVisible(!test.isVisible());
+     testDao.saveOrUpdate(test);
+  }
+
+  @Transactional
   public Test getTest(Long id) {
     return (Test)testDao.find(id);
   }
