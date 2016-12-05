@@ -6,45 +6,50 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="/resources/js/materialize.min.js"></script>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="/resources/css/materialize.min.css" media="screen,projection"/>
 <head>
   <meta charset="UTF-8">
-  <title>Тест ${test.caption}</title>
+  <title>Тест "${test.caption}"</title>
 </head>
 
 <body>
-<div class="container col-md-1"></div>
-<div class="container col-md-10">
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Ultimate Testing System</a>
+<div class="row">
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="/logout">ВЫХОД</a></li>
+  </ul>
+  <nav class="teal lighten-3">
+    <div class="nav-wrapper">
+      <div class="brand-logo center">
+        Ultimate Testing System
+      </div>
+      <ul class="left hide-on-med-and-down">
+        <li><a href="/allTests">ГЛАВНАЯ</a></li>
+        <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
+      </ul>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">${userName}<i
+                class="material-icons right">arrow_drop_down</i></a></li>
+      </ul>
     </div>
-    <ul class="nav navbar-nav">
-      <li><a href="/allTests">ГЛАВНАЯ</a></li>
-      <li><a href="/userTests">МОЙ ПРОФИЛЬ</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>ВЫХОД</a></li>
-    </ul>
-  </div>
-</nav>
+  </nav>
 </div>
-  <div class="container col-md-1"></div>
 
-<div class="container col-md-1"></div>
-<div class="container col-md-10">
+
+<div class="col s1"></div>
+<div class="col s10">
 <div id="upperBtns">
   <c:forEach items="${test.questions}" var="question" varStatus="loop">
     <a id="btn${loop.index+1}" class="btn btn-sm btn-upper btn-primary" onclick="show(this)">${loop.index+1}</a>
   </c:forEach>
 </div>
 </div>
-<div class="container col-md-1"></div>
+<div class="col s1"></div>
 
-<div class="container col-md-4"></div>
-<div class="container col-md-4">
-
+<div class="row">
+<div class="col s4"></div>
+<div class="col s4">
   <div class="row">
     <div class="control-group" id="fields">
       <legend></legend>
@@ -88,8 +93,9 @@
                 <br/> <br/>
                 <c:forEach items="${qu.answers}" var="answer" varStatus="innerLoop">
                   <div class="row">
-                    <input type="${(qu.answerCount==1) ? 'radio' : 'checkbox'}" name="${qu.id}" value="${answer.id}"/>
-                    <c:out value="${innerLoop.index+1}.  ${answer.text}"/>
+                    <input type="${(qu.answerCount==1) ? 'radio' : 'checkbox'}"
+                           id="ch_${innerLoop.index}" name="${qu.id}" value="${answer.id}"/>
+                    <label for="ch_${innerLoop.index}"><c:out value="${innerLoop.index+1}.  ${answer.text}"/></label>
                   </div>
                   <br/>
                 </c:forEach>
@@ -106,8 +112,7 @@
             <br/><br/>
 
             <div id="submitForm" style="text-align: center">
-              <%--class="btn waves-effect waves-light"--%>
-              <button type="submit" formmethod="post" class="btn btn-primary">
+              <button type="submit" formmethod="post" class="btn waves-effect waves-light">
                 Завершить тест
               </button>
             </div>
@@ -119,7 +124,9 @@
     </div>
   </div>
 </div>
-<div class="container col-md-4"></div>
+<div class="col s4"></div>
+</div>
+
 <script type="text/javascript">
   document.page = 1;
   document.pageCount = ${fn:length(test.questions)};

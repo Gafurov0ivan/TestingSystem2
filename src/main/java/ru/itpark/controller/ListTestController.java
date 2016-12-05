@@ -32,7 +32,7 @@ public class ListTestController {
     private UserTestService userTestService;
 
 
-    @RequestMapping(value = "/userTests2", method = RequestMethod.POST)
+    @RequestMapping(value = "/userTests", method = RequestMethod.POST)
     public ModelAndView getPostUserTests2(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userTests");
@@ -54,7 +54,7 @@ public class ListTestController {
     }
 
 
-    @RequestMapping(value = "/userTests", method = RequestMethod.POST)
+    @RequestMapping(value = "/userTests2", method = RequestMethod.POST)
     public ModelAndView getPostUserTests(WebRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userTests");
